@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Победить время</title>
+    <style>
+        body{
+            
+            font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-size: large;
+            background-color: #0b0e07;
+            background-image: url('/files/fon.png');
+            color: rgb(0, 0, 0);
+            background-repeat: no-repeat;
+            text-align: center;
+            background-size:100%;
+            -ms-interpolation-mode: nearest-neighbor; /* IE 7+ (не стандартное свойство) */
+            image-rendering: -webkit-optimize-contrast; /* Safari 6, UC Browser 9.9 */
+            image-rendering: -webkit-crisp-edges; /* Safari 7+ */
+            image-rendering: -moz-crisp-edges; /* Firefox 3.6+ */
+            image-rendering: -o-crisp-edges; /* Opera 12 */
+            image-rendering: pixelated; /* Chrome 41+ and Opera 26+ */
+
+        }
+        table{
+            background:linear-gradient(to bottom, rgba(8, 255, 173, 0.589) 5%, rgba(26, 126, 92, 0.2) 100%);
+            color: #ffffff;
+            font-size: larger;
+            width: 35%;
+        }
+        #lab{
+            background-color: #0688fa;
+        }
+        button {
+            transition:10s;
+            box-shadow:inset 0px -3px 7px 0px #29bbff;
+            background:linear-gradient(to bottom, #2dabf9 5%, #0688fa 100%);
+            background-color:#2dabf9;
+            height:80%;
+            width: 80%;
+            border-radius:3px;
+            border:1px solid #0b0e07;
+            display:inline-block;
+            cursor:pointer;
+            color:#ffffff;
+            font-family:Arial;
+            font-size:15px;
+            padding:9px 10px;
+            text-decoration:none;
+            text-shadow:0px 1px 0px #263666;
+        }
+        button:hover {
+            transition:10s;
+            background:linear-gradient(to bottom, #41a75a 5%, #9af92d 100%);
+            background-color:#e4f1e4;
+            
+        }
+        button:active {
+            position:relative;
+            top:1px;
+        }
+        #head,#body,#arms{
+            position: absolute;
+            height: 18%;
+            left: 20%;
+            top: 40%;
+        }
+        #head{
+            background-color: rgba(255, 196, 118, 0.5);
+        }
+        #main{
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            font-size: 30px;
+            position: absolute;
+            background-color: rgba(125, 157, 216,0.5);
+            left: 45%;
+            width: 50%;
+        }
+        audio{
+            position: absolute;
+            top: 90%;
+            left: 2%;
+        }
+       
+    </style>
+    
+</head>
+
+<body>
+    
+    <h1>Time Fall</h1>
+    <p id="main">༼ つ ◕_◕ ༽つчто-то пошло не так</p>
+    <table>
+        <tr>  
+            <td>навыки</td>
+           <td><button id="b1">сила +1</button></td>
+           <td><button id="b2">ловкость +1</button></td>
+           <td><button id="b3">интелект +1</button></td>
+        </tr>
+        <tr> 
+            <td>среда</td> 
+            <td><button id="b4">заработать репутацию</button></td>
+            <td><button id="b5">нанять больше рабочих</button></td>
+            <td><button id="b6">исследовать новые технологии</button></td>
+        </tr>
+        <tr>  
+            <td>магия</td>
+            <td><button id="b7">провести ритуал</button></td>
+            <td><button id="b8">развивать врожденную магию</button></td>
+            <td><button id="b9">изучать демонов</button></td>
+        </tr>
+    </table>
+    <img src="/files/h1.png" alt="" id="head">
+    <img src="/files/arm1.png" alt="" id="arms">
+    <img src="/files/t1.png" alt="" id="body">
+    <audio src="http://stream.melonradio.com/deep" autoplay="autoplay" controls="controls">
+    <script>
+        Mo=document.getElementById("main")
+        head=document.getElementById("head")
+        body=document.getElementById("body")
+        arms=document.getElementById("arms")
+        
+        money=0;
+        cost=1;
+        end=530;
+        //характеристики
+        str=0;//сила
+        agi=0;//ловкость 
+        int=0;//интелект
+        //разное
+        rep=0;
+        mag=0;
+        workers=1;
+        tech=0;
+        evil=0;
+        win=false;
+        Ultra_power_ending=true;
+        WinStory='';
+        audio_player=false;
+        function timer(){
+            //апдейт перса
+            if (str>=3){
+                body.src='/files/t3.png'
+            }
+            if (agi>=3){
+                arms.src='/files/arm3.png'
+            }
+            if (int>=3){
+                head.src='/files/h3.png'
+            }
+            if (str>=6){
+                body.src='/files/t6.png'
+            }
+            if (agi>=6){
+                arms.src='/files/arm6.png'
+            }
+            if (int>=6){
+                head.src='/files/h6.png'
+            }
+            if (str>=10){
+                body.src='/files/t10.png'
+            }
+            if (agi>=10){
+                arms.src='/files/arm10.png'
+            }
+            if (int>=10){
+                head.src='/files/h10.png'
+            }
+            if (str>=15){
+                body.src='/files/t15.png'
+            }
+            if (agi>=15){
+                arms.src='/files/arm15.png'
+            }
+            if (int>=15){
+                head.src='/files/h15.png'
+            }
+            if (str>=20){
+                body.src='/files/t20.png'
+            }
+            if (agi>=20){
+                arms.src='/files/arm20.png'
+            }
+            if (int>=20){
+                head.src='/files/h20.png'
+            }
+            //-----------------
+            if (agi>20&&int>20&&str>20&&Ultra_power_ending){
+                if(confirm("ты получил такую мощь которая не снилась никому, хочешь завершить свое приключение?")){
+                    win=true;
+                    WinStory="<p id='main'>Ты стал настолько силён что время обогнуло тебя, теперь ты сверх существо, но нет, ты не пошел править миром, ты выбрал уединение...</p>"
+                    document.body.style.backgroundImage ='url("/files/stonew.jpg")';
+                }else{
+                    Ultra_power_ending=false;
+                }
+            }
+            if (win){
+                document.body.innerHTML="<h1>победа!</h1>"+WinStory;
+            }
+            if (end>0){
+                money+=workers;
+                end-=1;
+                
+                Mo.innerHTML=+money+"$"
+                if (int>1){
+                    //вывод параметров
+                    Mo.innerHTML+="<br>сила:"+str;
+                    Mo.innerHTML+="<br>ловкость:"+agi;
+                    Mo.innerHTML+="<br>интелект:"+int;
+                    Mo.innerHTML+="<br>стоимость следующего апгрейда:"+cost+"$";
+                }
+                if (int>2){
+                    Mo.innerHTML+="<br>репутация:"+rep;
+                    Mo.innerHTML+="<br>зароботок:"+workers;
+                    Mo.innerHTML+="<br>технологии:"+tech;
+                }
+                if (int>4){
+                    Mo.innerHTML+="<br>ты в своем познании настолько преисполнился что...";
+                    
+                    Mo.innerHTML+="<br>времени до конца игры:"+end+" сек.";
+                    Mo.innerHTML+="<br>сила магии:"+mag;
+                    Mo.innerHTML+="<br>зло:"+evil;
+                    Mo.innerHTML+="<br>Заклинания (затрагивают характеристики):<br>"
+                    Mo.innerHTML+="<button id='b10'>наколдовать рабочего(вр. магия)</button>"
+                    Mo.innerHTML+="<button id='b11'>наколдовать силу(инт.)</button>"
+                    Mo.innerHTML+="<button id='b12'>наколдовать зло(сил.)</button>"
+                    document.getElementById("b10").onclick = function(){
+                        if (mag>evil){
+                            alert("этот рабочий служит так же как и другие но он черт... в прямом смысле этого слова, как ни странно зло возросло")
+                            workers+=1;
+                            evil+=1;
+                            mag-=1;
+                            agi-=1;
+                        }else{
+                            alert("ты недостаточно ловок чтобы провести ритуал призыва")
+                        }
+                    }
+                    document.getElementById("b11").onclick = function(){
+                        if (int+mag>str){
+                            alert("мышечная масса растёт! Но кажется ты стал тупее...");
+                            str+=1;
+                            mag-=1;
+                            int-=1;
+                        }else{
+                            alert("тебе нехватает мозгов чтобы это произошло, я думаю во всем виновата мышечная масса, её у тебя больше чем интелекта, а также магия, её слишком мало")
+                        }
+                        
+                    }
+                    document.getElementById("b12").onclick = function(){
+                        if (str+mag>evil){
+                            alert("наверное одно из простейших заклятий, всего то нужно принести пару жертв дьяволу! Наконец то пригодиться подвал");
+                            str-=1;
+                            evil+=2;
+                        }else{
+                            alert("ты не достаточно сильный чтобы убить человека, либо у тебя недостаточно магии")
+                        }
+                        
+
+                    }
+                }
+                if (int>6){
+                    audio_player=true;
+                }
+                if(!win){
+                setTimeout(timer,1000)//1 секунда
+                }
+            }else{
+                document.body.style.backgroundImage ='url("/files/adtree.png")';
+                document.body.innerHTML="<h1 id='main'>ты проиграл, возможно в следующий раз у тебя будет достоточно навыков и времени, но не сейчас, кто знает что ещё хранит эта игра (тут 4 концовки чтоб ты знал)</h1>"
+                document.body.style.color='rgb(5,5,5)';
+            }
+            
+        }
+        //кнопки прокачки навыков
+        document.getElementById("b1").onclick = function(){
+            if (money>=cost){
+                money-=cost;
+                cost+=2;
+                str+=1;
+            }else if (int<=2){
+                alert("что-то мешает вам приобрести силу, может у вас недостаточно денег чтобы сходить в качалку?")
+            }
+        }
+        document.getElementById("b2").onclick = function(){
+            if (money>=cost){
+                money-=cost;
+                cost+=2;
+                agi+=1;
+            }else if (int<=2){
+                alert("если хочешь прокачать фистинг мне нужны 300$")
+            }
+        }
+        document.getElementById("b3").onclick = function(){
+            if (money>=cost){
+                money-=cost;
+                cost+=2;
+                int+=1;
+            }else if (int<=2){
+                alert("что-то мешает вам приобрести ИНТЕЛЕКТ, может у вас недостаточно денег чтобы купить книг?")
+                return
+            }
+            if (int==2){
+                alert("поздравляю! ты достаточно умный чтобы видеть свои параметры!")
+            }
+        }
+        //кнопки среды
+        document.getElementById("b4").onclick = function(){
+            if(evil>5){
+                alert("ваше окружение косо смотрит на вас, уровень зла мешает вам повышать репутацию(но вы все равно можете попытаться)")
+            }
+            if (rep>10){
+                if (confirm("а может ну её эту репутацию? тебе же нужны деньги! Давай предадим всех кто в тебя верит!")){
+                    alert("вы только что опустили свою репутацию до нуля однако вы на этом заработали! а также подняли уровень зла, т.к. все кто вас уважали вас-ненавидят")
+                    money+=rep*10;
+                    evil+=rep;
+                    rep=0;
+                    
+                }
+            }
+            if (str<rep+3+evil){
+                alert("Для того чтобы поднять репутацию нужно быть сильнее")
+                return
+            }
+            
+            rep+=1
+            if (rep==2){
+                alert("пара уважающих тебя людей, вполне неплохо")
+            }
+            if (rep==4){
+                alert("вокруг себя ты собрал целую банду уважающих тебя людей")
+            }
+            if (rep==6){
+                alert("Твоя банда-твоя семья, ты возглавил местную банду мафии, никто в тебе не сомнивался, у тебя есть деньги и власть")
+            }
+            if (rep==8){
+                alert("Все в городи находится по твоим управлением, ты установил тчательную тлежку за каждым жителем и набираешь все большую власть")
+            }
+            if (rep==10){
+                alert("Ты так хорошо управлял городо что тебя зауважал сам президент, хотя скорее всего это просто страх, впрочем твое влияние начало распространяться на страну")
+                document.body.style.backgroundImage ='url("/files/town.png")';
+            }
+            if (rep==12){
+                alert("Строна захвачена, люди признали тебя президентом, первым твоим указом стало создание безволютной системы, все так сильно тебя уважали что никто и не подумал сказать что это бред")
+                
+            }
+            if (rep==14){
+                alert("Безволютная система работала безотказно, многие государства присоеденились в твой Союз Родных Русских Республик(СРРР), С каждым днем территория становилась все больше и больше, в один момент ты захватил весь континент")
+                
+            }
+            if (rep==16){
+                alert("Ты возглавил всю планету и остановил все войны, ресурсы были общими, уровень образования рос, теперь это Империя Земля. Ты стал захватывать космос, вместе с Илоном Маском ты захватил марс и нарисовал на нем свой красный флаг СРРР")
+                
+            }
+            if (rep==18){
+                alert("Галактика склонилась пред тобой, тебя уважало каждое живое существо, с помощью самых лучших ученых ты отправился захватывать другие галактики а затем и всю вселенную, ничто не может тебя остановить  тебя уважает все.")
+            }
+            if (rep==20){
+                win=true;
+                WinStory="Ты стал настолько уважаем что сам космос тебя зауважал, теперь ты выше времени, оно работает на тебя, ты не бог этого мира но через пару минут уже и он стоит перед тобой на коленях."
+                document.body.style.backgroundImage ='url("/files/ldark.png")';
+                document.body.style.color='rgb(250,250,250)';
+            }
+            alert("вы показали что достойны уважения, репутация поднялась, новые рабочие стали дешевле")
+            
+        }
+        document.getElementById("b5").onclick = function(){
+            cost_of_rab=workers*30+10-rep*10
+            ask=confirm("рабочий просит "+cost_of_rab+"$ чтобы его нанять")
+            
+            if(money>=(cost_of_rab)&&ask){
+                money-=cost_of_rab;
+                workers+=1;
+                alert("вы наняли рабочего");
+
+            }else{
+                if (ask){
+                    alert("у вас недостаточно денег")
+                }
+                return
+            }
+        }
+        document.getElementById("b6").onclick = function(){
+            if (int<7+tech){
+                alert("ты слишком тупой для этого")
+                return
+            }
+            cost+=1;
+            tech+=1;
+            if (tech<3){
+                alert("я уверен, технологии скоро откроют для нас нечто невероятное, нужно лишь изучать, на чердаке ты открыл свою мини лабораторию")
+                return
+            }
+            if (tech==4){
+                alert("Мир не понимает твоих идей, мир думает что ты сошел с ума, но ты воистину гений, не зря же ты синий!")
+                return
+            }
+            if (tech==5){
+                alert("ты в своих исследованиях обнаружил что есть некоторое время, которое идёт, вся твоя лаборатория в шоке от этого открытия")
+            }
+            if (tech==7){
+                alert("в своих исследованиях ты понял что вся магия основана на зле, с наукой её довольно сложно связать, а так же все открытия нужно внимательно читать, даже в рифму!")
+            }
+            if (tech==9){
+                alert("вся наука основана на интелекте, однако высоких результатов не достичь без денег, но как же быть? Правильно, рабочие, а они открываются с помощью денег, снизить цену можно репутацией.")
+            }
+            if (tech==11){
+                alert("ты решил придумать безволютную систему так как посмотрел все лекции Жака Фреско, поможет ли это достичь победы? Незнаю, но обязательно стоит попробовать, кстати твои последователи подарили тебе новый дом!")
+                document.body.style.backgroundImage ='url("/files/stonew.jpg")';
+            }
+            if (tech==13){
+                alert("Безволютная система была не признана обществом, возможно её и можно реализовать, но не сейчас.")
+            }
+            if (tech==15){
+                alert("Почувствовав власть ты начал зодумываться почему ты синий? Незнаю... о что это? Книжечка по DnD!")
+            }
+            if (tech==17){
+                alert("ты разобрался как стать DUNGEON MASTER-ом, но понял что это не твоё когда вспомнил что ты голубой")
+            }
+            if (tech==19){
+                alert("так, открытие уже близко, осталось совсем не много нужно только успеть!")
+            }
+            if (tech==20){
+                alert("ты победил! Общество играет по твоим правилам!")
+                WinStory="Ты нашел способ как изобрести безвалютную систему, никто не нуждался в энергии так как все питалось от стабелизированной черной дыры, твой мозг был на столько совершенен что никто не мог возразить тебе в твоем великолепии, благодаря науке ты остановил нименуемый ход времени"
+                win=true;
+                document.body.style.backgroundImage ='url("/files/dark.gif")';
+                document.body.style.color='rgb(250,250,250)';
+            }
+        }
+        // и наконец - магия!
+        document.getElementById("b7").onclick = function(){
+            if (int<4+evil){
+                alert("Извини игрок, я не могу предаставить тебе магию, возвращайся когда будешь... м-м-м-м-м-м поумнее")
+                return
+            }
+            ask=prompt("выбери направление ритуала 1-сила 2-ловкость 3-интелект 4-использование врожденной магии, учти что у каждого ритуала свои последствия но они крайне выгодны если тебе нужно именно то что на них написано(за редким исключением)")
+            switch(ask){
+                case '1':
+                    alert("ритуал наполнил твои мышцы силой")
+                    str+=1;
+                    evil+=1;
+                    mag+=1;
+                    break
+                case '2':
+                    alert("ритуал наполнил твои пальцы ловкостью")
+                    agi+=1;
+                    evil+=1;
+                    mag+=2;
+                    break
+                case '3':
+                    alert("ритуал интелекта наполнил твой мозг... злом и магией")
+                    int+=1;
+                    evil+=2;
+                    mag+=3;
+                    break
+                case '4':
+                    if (mag<evil){
+                        alert("чтобы использовать это - равивай врожденную магию, она должна быть больше зла")
+                        break
+                    }
+                    alert("сейчас будет серия вопросов, ответишь правильно - будешь на шаг ближе к победе")
+                    if(!confirm("у игры больше 3 концовок?")){
+                        alert("неправильный ответ")
+                        break;
+                    }
+                    if(confirm("ловкость в этой игре довольно слаба")){
+                        alert("неправильный ответ")
+                        break;
+                    }
+                    if(!confirm("если разработать определённую стратегию то можно выйти в реально большой зароботок")){
+                        alert("неправильный ответ")
+                        break;
+                    }
+                    if(!confirm("Путин красавчик")){
+                        alert("неправильный ответ")
+                        break;
+                    }
+                    alert("ты ответил на все вопросы правильно, самое время призывать демона! чтобы его призвать - подними уровень зла до 20")
+                    break
+                default:
+                    alert("ты не смог определиться, побочный эффект - повышение зла")
+                    evil+=2;
+                    break
+            }
+            
+            
+        }
+        document.getElementById("b8").onclick = function(){
+            if (agi<mag*2+1){
+                alert("ты недостаточно ловок для этого")
+                return;
+            }
+            alert("ты повышаешь магические способности...")
+            mag+=1;
+
+        }
+        document.getElementById("b9").onclick = function(){
+            if (evil<5){
+                alert("ты просто не знаешь как делать это... но ты знаешь что демоны связаны со злом, стоит накопить около 5 зла чтобы проверить")
+            }else if(evil<10){
+                alert("Когда ты изучал демонов ты нашел информацию о неком зле, без зла ничего не получится? Может накопить около 10 зла чтобы узнать?")
+            }else if (evil<20){
+                alert("ДА, БЕЗ ЗЛА НИЧЕГО НЕ ПОЛУЧИТСЯ, ТЕБЕ НУЖНО 20 ЗЛА")
+            }else if (evil<25){
+                alert("Но 20 зла не хватило... может нужно больше? Но сколько?")
+            }
+            if(evil>=25){
+                alert("ты призвал демона, зло тебя переполняло, ты чувствовал как оно буквально сливается с тобой")
+                win=true;
+                WinStory="<p id='main'>Вы вместе с демоном захватили мир, он очень уважал твое упорство а потому даже не обманул тебя, ты получил особняк в аду, круто! Так продолжались долгие годы... мир гнил, в нем ни осталось ничего интересного, ты что зря вызвал демона? В своем особняке ты открыл лабораторию, в ней ты узнал что оказывается демон которогы ты вызвал отключил время, ты выжил только потому что он тебя пощадил, остальные же погибли в страшнейших агониях, впрочем зато у меня есть особняк!</p>"
+                document.body.style.backgroundImage ='url("/files/ad.png")';
+                document.body.style.color='rgb(250,250,250)';
+            }
+        }
+        
+        
+        timer();
+        
+    </script>
+</body>
+
+</html>
