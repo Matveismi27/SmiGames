@@ -58,7 +58,7 @@ function print(txt){
     text.innerHTM=''
     text.innerHTML = txt.slice(0, i)
     i++
-    setTimeout(print,1,txt)
+    setTimeout(print,30,txt)
     
 }
 // <audio src='files/song1.mp3' autoplay='autoplay'> - добавить музло!
