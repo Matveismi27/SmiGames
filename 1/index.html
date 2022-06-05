@@ -11,7 +11,7 @@
             font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
             font-size: large;
             background-color: #0b0e07;
-            background-image: url('/files/fon.png');
+            background-image: url('files/fon.png');
             color: rgb(0, 0, 0);
             background-repeat: no-repeat;
             text-align: center;
@@ -112,9 +112,9 @@
             <td><button id="b9">изучать демонов</button></td>
         </tr>
     </table>
-    <img src="/files/h1.png" alt="" id="head">
-    <img src="/files/arm1.png" alt="" id="arms">
-    <img src="/files/t1.png" alt="" id="body">
+    <img src="files/h1.png" alt="" id="head">
+    <img src="files/arm1.png" alt="" id="arms">
+    <img src="files/t1.png" alt="" id="body">
     <audio src="http://stream.melonradio.com/deep" autoplay="autoplay" controls="controls">
     <script>
         Mo=document.getElementById("main")
@@ -142,56 +142,56 @@
         function timer(){
             //апдейт перса
             if (str>=3){
-                body.src='/files/t3.png'
+                body.src='files/t3.png'
             }
             if (agi>=3){
-                arms.src='/files/arm3.png'
+                arms.src='files/arm3.png'
             }
             if (int>=3){
-                head.src='/files/h3.png'
+                head.src='files/h3.png'
             }
             if (str>=6){
-                body.src='/files/t6.png'
+                body.src='files/t6.png'
             }
             if (agi>=6){
-                arms.src='/files/arm6.png'
+                arms.src='files/arm6.png'
             }
             if (int>=6){
-                head.src='/files/h6.png'
+                head.src='files/h6.png'
             }
             if (str>=10){
-                body.src='/files/t10.png'
+                body.src='files/t10.png'
             }
             if (agi>=10){
-                arms.src='/files/arm10.png'
+                arms.src='files/arm10.png'
             }
             if (int>=10){
-                head.src='/files/h10.png'
+                head.src='files/h10.png'
             }
             if (str>=15){
-                body.src='/files/t15.png'
+                body.src='files/t15.png'
             }
             if (agi>=15){
-                arms.src='/files/arm15.png'
+                arms.src='files/arm15.png'
             }
             if (int>=15){
-                head.src='/files/h15.png'
+                head.src='files/h15.png'
             }
             if (str>=20){
-                body.src='/files/t20.png'
+                body.src='files/t20.png'
             }
             if (agi>=20){
-                arms.src='/files/arm20.png'
+                arms.src='files/arm20.png'
             }
             if (int>=20){
-                head.src='/files/h20.png'
+                head.src='files/h20.png'
             }
             //-----------------
             if (agi>20&&int>20&&str>20&&Ultra_power_ending){
                 if(confirm("ты получил такую мощь которая не снилась никому, хочешь завершить свое приключение?")){
                     win=true;
                     WinStory="<p id='main'>Ты стал настолько силён что время обогнуло тебя, теперь ты сверх существо, но нет, ты не пошел править миром, ты выбрал уединение...</p>"
-                    document.body.style.backgroundImage ='url("/files/stonew.jpg")';
+                    document.body.style.backgroundImage ='url("files/stonew.jpg")';
                 }else{
                     Ultra_power_ending=false;
                 }
@@ -267,7 +267,7 @@
                 setTimeout(timer,1000)//1 секунда
                 }
             }else{
-                document.body.style.backgroundImage ='url("/files/adtree.png")';
+                document.body.style.backgroundImage ='url("files/adtree.png")';
                 document.body.innerHTML="<h1 id='main'>ты проиграл, возможно в следующий раз у тебя будет достоточно навыков и времени, но не сейчас, кто знает что ещё хранит эта игра (тут 4 концовки чтоб ты знал)</h1>"
                 document.body.style.color='rgb(5,5,5)';
             }
@@ -339,7 +339,7 @@
             }
             if (rep==10){
                 alert("Ты так хорошо управлял городо что тебя зауважал сам президент, хотя скорее всего это просто страх, впрочем твое влияние начало распространяться на страну")
-                document.body.style.backgroundImage ='url("/files/town.png")';
+                document.body.style.backgroundImage ='url("files/town.png")';
             }
             if (rep==12){
                 alert("Строна захвачена, люди признали тебя президентом, первым твоим указом стало создание безволютной системы, все так сильно тебя уважали что никто и не подумал сказать что это бред")
@@ -359,7 +359,7 @@
             if (rep==20){
                 win=true;
                 WinStory="Ты стал настолько уважаем что сам космос тебя зауважал, теперь ты выше времени, оно работает на тебя, ты не бог этого мира но через пару минут уже и он стоит перед тобой на коленях."
-                document.body.style.backgroundImage ='url("/files/ldark.png")';
+                document.body.style.backgroundImage ='url("files/ldark.png")';
                 document.body.style.color='rgb(250,250,250)';
             }
             alert("вы показали что достойны уважения, репутация поднялась, новые рабочие стали дешевле")
@@ -407,7 +407,7 @@
             }
             if (tech==11){
                 alert("ты решил придумать безволютную систему так как посмотрел все лекции Жака Фреско, поможет ли это достичь победы? Незнаю, но обязательно стоит попробовать, кстати твои последователи подарили тебе новый дом!")
-                document.body.style.backgroundImage ='url("/files/stonew.jpg")';
+                document.body.style.backgroundImage ='url("files/stonew.jpg")';
             }
             if (tech==13){
                 alert("Безволютная система была не признана обществом, возможно её и можно реализовать, но не сейчас.")
@@ -425,7 +425,7 @@
                 alert("ты победил! Общество играет по твоим правилам!")
                 WinStory="Ты нашел способ как изобрести безвалютную систему, никто не нуждался в энергии так как все питалось от стабелизированной черной дыры, твой мозг был на столько совершенен что никто не мог возразить тебе в твоем великолепии, благодаря науке ты остановил нименуемый ход времени"
                 win=true;
-                document.body.style.backgroundImage ='url("/files/dark.gif")';
+                document.body.style.backgroundImage ='url("files/dark.gif")';
                 document.body.style.color='rgb(250,250,250)';
             }
         }
@@ -510,7 +510,7 @@
                 alert("ты призвал демона, зло тебя переполняло, ты чувствовал как оно буквально сливается с тобой")
                 win=true;
                 WinStory="<p id='main'>Вы вместе с демоном захватили мир, он очень уважал твое упорство а потому даже не обманул тебя, ты получил особняк в аду, круто! Так продолжались долгие годы... мир гнил, в нем ни осталось ничего интересного, ты что зря вызвал демона? В своем особняке ты открыл лабораторию, в ней ты узнал что оказывается демон которогы ты вызвал отключил время, ты выжил только потому что он тебя пощадил, остальные же погибли в страшнейших агониях, впрочем зато у меня есть особняк!</p>"
-                document.body.style.backgroundImage ='url("/files/ad.png")';
+                document.body.style.backgroundImage ='url("files/ad.png")';
                 document.body.style.color='rgb(250,250,250)';
             }
         }

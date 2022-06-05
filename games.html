@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Игры</title>
+    <style>
+        img{
+            transition: 80ms;
+            width: 160px;
+            height: 160px;
+            -ms-interpolation-mode: nearest-neighbor; /* IE 7+ (не стандартное свойство) */
+            image-rendering: -webkit-optimize-contrast; /* Safari 6, UC Browser 9.9 */
+            image-rendering: -webkit-crisp-edges; /* Safari 7+ */
+            image-rendering: -moz-crisp-edges; /* Firefox 3.6+ */
+            image-rendering: -o-crisp-edges; /* Opera 12 */
+            image-rendering: pixelated; /* Chrome 41+ and Opera 26+ */
+
+        }
+        a{
+            transition: 80ms;
+            position: relative;
+            height: 160px;
+            width: 160px;
+
+        }
+        
+        div.punct:hover img{
+            transform: scale(80%,80%);
+        }
+        div{
+            position: absolute;
+            background-color: rgba(30, 30, 30, 1);
+            left: 10%;
+            right: 10%;
+            top: 10%;
+            bottom: 10%;
+        }
+        
+        div.punct{
+            position: relative;
+            right: 20%;
+            left: 0%;
+            top: 0%;
+            color: #fff;
+            font-family: 'Segoe UI';
+            font-size: 75px;
+            
+        }
+        div.punct:hover{
+
+            transition: 80ms;
+            background-color: rgba(0, 195, 255, 0.7);
+            color: black;
+            
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div class="punct"><a href="1/index.html"><img src="1/content.png" alt="1 игра"></a>bruh</div>
+        <div class="punct"><a href="2/index.html"><img src="2/content.png" alt="2 игра"></a>bruh2</div>
+</div>
+</body>
+</html>
