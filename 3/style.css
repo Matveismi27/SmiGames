@@ -2,6 +2,22 @@ body{
     overflow-y:hidden;
     
 }
-canvas{
-    font-family:Impact;
+img{
+    position: absolute;
+    height: 280px;
+    width: 200px;
+    
+    -moz-user-select: none; -webkit-user-select: none; -ms-user-select: none; user-select: none;
+}
+#i1{
+    right:20px;
+    top: 20px;
+}
+#i2{
+    right:220px;
+    top: 20px;
+}
+#i3{
+    right:420px;
+    top: 20px;
 }

@@ -12,10 +12,10 @@ class bul{
         this.y=y||10;
         this.dx=dx||5;
         this.dy=dy||5;
-        this.height=height||20;
-        this.width=width||20;
+        this.height=height+gun.power||20+gun.power;
+        this.width=width+gun.power||20+gun.power;
         this.hp=1;
-        this.color="rgba(60,60,60)"
+        this.color="rgb("+(gun.power * 20)+",60,60)"
         this.kill=false;
     }
 }
@@ -28,19 +28,17 @@ class block{
         this.hp=hp||10;
         this.width=width||200;
         this.height=height||200;
-        this.color="rgba(60,60,"+this.hp*10+",0.5)"
+        this.color="rgba("+this.hp+","+this.hp*5+","+this.hp*10+",0.2)"
         this.kill=false;
         this.img=new Image();
-        this.img.src=img||"SA.png"
+        this.img.src=img||"df.png"
     }
 }
 //данные
 bullets=[];
 obj=[];
 autofiresleep=0;
-xp=0;
 timermobs=1990;
-needXP=1;
 i=0;
 mouse = {
     x:10,//изначально
@@ -52,7 +50,8 @@ gun = {
     db:2, //скорость пули
     dmg:1,
     size:2,
-    Count:0
+    Count:0,
+    power:0
 }
 mob ={
     hp:2,
@@ -67,9 +66,16 @@ Ftext ={
     x:100,
     y:100
 }
+LvlUp = {
+    points:0,
+    lvl:1,
+    needXP:1,
+    incneedXP:1,
+    xp:0
+}
 //рисование блоками
-function draw(x , y, hp, dx, dy, height,width){
-    obj[obj.length]=new block (x*100,y*100,height,width, hp, dx,dy)
+function draw(x , y, hp, dx, dy, height,width,src){
+    obj[obj.length]=new block (x*100,y*100,height,width, hp, dx,dy,src)
 }
 //гравитация
 function bgravity(bullet){
@@ -79,7 +85,7 @@ function bgravity(bullet){
         bullet.y+=bullet.dy;
         bullet.dx*=0.999;
         bullet.dy+=0.01;
-        ctx.fillStyle = 'rgb(130,130,130)'
+        ctx.fillStyle = 'rgb('+gun.power+',130,130)'
         ctx.fillRect(bullet.x,bullet.y,bullet.width,bullet.height);
     }
 }
@@ -104,15 +110,13 @@ function objgrav(object){
 }
 //цикл игры
 function time(){
-    //автострельба
-    for(j=0;j<gun.Count;j++){
-        autofiresleep+=1;
-        if (autofiresleep>=100){
-            autofiresleep=0;
-            fire()
-        }
+    //POWER
+    if (gun.power>=gun.size*10){
+    }else{
         
-    }
+        gun.power+=gun.size/100;
+    }     
+    
     //фон
     canvas.width = window.innerWidth-15;
     canvas.height = window.innerHeight-15;
@@ -141,17 +145,37 @@ function time(){
     if (timermobs>=2300){
         timermobs=0
         //спавн
-        draw(16,5,mob.hp,mob.sdx,mob.sdy,mob.height,mob.width)
-        mob.hp+=1;
-        mob.sdx-=0.01;
+        //рандомный враг
+        random = getRandomInt(5)//0,1,2,3,4
+        if (random==0){
+            draw(16,3,mob.hp,mob.sdx-1,mob.sdy,mob.height,mob.width,"SA.png")
+            mob.hp+=1;
+            mob.sdx-=0.01;
+        }else if(random==1){
+            draw(16,4,mob.hp/2,mob.sdx-2,mob.sdy,mob.height-40,mob.width-40,"sam.png")
+            mob.hp+=1;
+            mob.sdx-=0.01;
+        }else if(random==2){
+            draw(16,5,mob.hp*2,mob.sdx,mob.sdy,mob.height-30,mob.width+100,"sun.png")
+            mob.hp+=7;
+            mob.sdx-=0.01;
+        }else{
+            //стандартный моб
+            draw(16,5,mob.hp/2,mob.sdx,mob.sdy+0.1,mob.height-90,mob.width-50)
+        }
     }else{
-        timermobs+=mob.hp/10+1
+        timermobs+=2
     }
-    //Огненный текст
+    //постоянная статистика
+    ctx.fillStyle="rgba(20,260,20,0.7)"
+    ctx.font="60px Impact"
+        ctx.fillText(LvlUp.xp+"/"+LvlUp.needXP+"  |"+LvlUp.points, 300, 130);
+        ctx.fillText(Math.round(gun.power)+"/"+gun.size*10, 300, 190);
+    //Огненный текст обработка
     if (Ftext.Fire>0){
         Ftext.Fire-=1;
-        ctx.fillStyle="rgba(200,200,200,"+Ftext.Fire/100+")"
-        ctx.font="80px Impact"
+        ctx.fillStyle="rgba(260,260,260,"+Ftext.Fire/100+")"
+        ctx.font="60px Impact"
         ctx.fillText(Ftext.Text, Ftext.x, Ftext.y);
         Ftext.x+=0.5;
         Ftext.y+=0.5;
@@ -164,25 +188,30 @@ function time(){
 function fdmg(object,dmg){
     // obj[obj.length]=new block(object.x,object.y,10,10,1);
     object.hp-=dmg;
-    object.color="rgba(60,60,"+object.hp*10+",0.5)"
+    object.color="rgba("+object.hp+","+object.hp*5+","+object.hp*10+","+0.01*object.hp+")"
     if (object.hp<=0){
         object.kill=true;
         XP(1);
     }
 }
+//случайности насыпем
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+}
+  //Sтреляем текстом
+function SFire(text,fire){
+    Ftext.Text=text
+    Ftext.Fire=fire
+}
 function XP(points){
     //опыт
-    xp+=points;
+    LvlUp.xp+=points;
     //лвл ап
-    if (xp>=needXP){
-        Ftext.Text="Новый уровень!"
-        Ftext.Fire=200
-        gun.db+=0.2;
-        gun.dmg+=needXP/10;
-        
-        needXP+=1
-        xp=0
-        gun.size+=1;
+    if (LvlUp.xp>=LvlUp.needXP){
+        SFire("Новый уровень!",200)
+        LvlUp.points+=1
+        LvlUp.needXP+=LvlUp.incneedXP
+        LvlUp.xp=0
     }
     //super buffs
     if (needXP==10){
@@ -197,7 +226,7 @@ function touch(obj1,obj2){
         if ((obj1.y+obj1.height/*высота пульки*/>obj2.y)&&(obj1.y-obj2.height<obj2.y))//по y +obj2.height
         {
             obj1.kill=true;
-            fdmg(obj2,gun.dmg)
+            fdmg(obj2,gun.dmg+gun.power)
             
         }
     }
@@ -212,6 +241,28 @@ canvas.onclick = function Fire(){
         direction = Math.asin(DY/HYP)
     bullets[i]=new bul(gun.x,gun.y,Math.cos(direction)*gun.db,Math.sin(direction)*gun.db,gun.size*2,gun.size*2)
     i+=1;//добавляем пулю
+    gun.power=0;//обнуляем повер
+}
+document.getElementById("i1").onclick =()=>{
+    if ( LvlUp.points>=1 ){
+        LvlUp.points-=1;
+        gun.size+=1;
+        SFire("Пушка увеличена!",200)
+    }
+}
+document.getElementById("i2").onclick =()=>{
+    if ( LvlUp.points>=1 ){
+        LvlUp.points-=1;
+        gun.db+=1;
+        SFire("Шмаляй в даль",200)
+    }
+}
+document.getElementById("i3").onclick =()=>{
+    if ( LvlUp.points>=1 ){
+        LvlUp.points-=1;
+        gun.dmg+=2;
+        SFire("Пробей их броню",200)
+    }
 }
 //просто для позиции мыши
 canvas.addEventListener(`mousemove`, setPos);
