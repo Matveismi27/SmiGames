@@ -21,3 +21,7 @@ img{
     right:420px;
     top: 20px;
 }
+audio{
+    position: absolute;
+    max-width:150px
+}

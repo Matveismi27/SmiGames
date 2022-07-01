@@ -20,7 +20,7 @@ class bul{
     }
 }
 class block{
-    constructor(x,y,height,width,hp,dx,dy,img){
+    constructor(x,y,height,width,hp,dx,dy,img,type){
         this.x=x||10;
         this.y=y||10;
         this.dx=dx||0;
@@ -32,6 +32,7 @@ class block{
         this.kill=false;
         this.img=new Image();
         this.img.src=img||"df.png"
+        this.type=type||"mob"
     }
 }
 //данные
@@ -40,6 +41,11 @@ obj=[];
 autofiresleep=0;
 timermobs=1990;
 i=0;
+boss={
+    hp:100,
+    sdx:-0.05,
+    sx:13
+}
 mouse = {
     x:10,//изначально
     y:10
@@ -58,13 +64,20 @@ mob ={
     sdx:-0.3,
     sdy:1,
     height:300,
-    width:200
+    width:200,
+    lvl:1
 }
 Ftext ={
     fire:0,
     Text:"Новый уровень",
     x:100,
     y:100
+}
+Ftext2 ={
+    fire:0,
+    Text:"Бафф за босса",
+    x:110,
+    y:310
 }
 LvlUp = {
     points:0,
@@ -74,8 +87,8 @@ LvlUp = {
     xp:0
 }
 //рисование блоками
-function draw(x , y, hp, dx, dy, height,width,src){
-    obj[obj.length]=new block (x*100,y*100,height,width, hp, dx,dy,src)
+function draw(x , y, hp, dx, dy, height,width,src,type){
+    obj[obj.length]=new block (x*100,y*100,height,width, hp, dx,dy,src,type)
 }
 //гравитация
 function bgravity(bullet){
@@ -92,15 +105,18 @@ function bgravity(bullet){
 /////////рисуем объекты
 function objgrav(object){
     if (!object.kill){
-        object.dy+=0.01;
-    object.x+=object.dx;
-    object.y+=object.dy;
-    ctx.fillStyle = object.color
-    ctx.fillRect(object.x,object.y,object.width,object.height);
-    ctx.drawImage(object.img,object.x,object.y,object.width,object.height);
-    if (object.y+object.height>canvas.height&&object.dy>0){
-        object.dy*=-1;
-    }
+        if (object.type=="boss"){
+        }else{
+            object.dy+=0.01;
+        }
+        object.x+=object.dx;
+        object.y+=object.dy;
+        ctx.fillStyle = object.color
+        ctx.fillRect(object.x,object.y,object.width,object.height);
+        ctx.drawImage(object.img,object.x,object.y,object.width,object.height);
+        if (object.y+object.height>canvas.height&&object.dy>0){
+            object.dy*=-1;
+        }
         if(object.x<0){
             location = location
             alert("Ты проиграл")
@@ -108,89 +124,47 @@ function objgrav(object){
         }
     }
 }
-//цикл игры
-function time(){
-    //POWER
-    if (gun.power>=gun.size*10){
-    }else{
-        
-        gun.power+=gun.size/100;
-    }     
-    
-    //фон
-    canvas.width = window.innerWidth-15;
-    canvas.height = window.innerHeight-15;
-    
-    ctx.fillStyle = 'rgb(30,30,30)'
-    ctx.fillRect(0,0,canvas.width,canvas.height);
-    //рисуем пули
-    for (j=0;j<bullets.length;j+=1){
-        if (bullets[j].y>1000){
-            bullets[j].kill=true
-        }
-        bgravity(bullets[j]);
-    }
-    //касания и объекты
-    for(j=0;j<obj.length;j++){
-        if (!obj[j].kill){
-        objgrav(obj[j])
-        for(k=0;k<bullets.length;k+=1){
-            if (!bullets[k].kill){
-            touch(bullets[k],obj[j])
-            }
-        }
-        }
-    }
-    //спавн мобов -------------------------------------------------
-    if (timermobs>=2300){
-        timermobs=0
-        //спавн
-        //рандомный враг
-        random = getRandomInt(5)//0,1,2,3,4
-        if (random==0){
-            draw(16,3,mob.hp,mob.sdx-1,mob.sdy,mob.height,mob.width,"SA.png")
-            mob.hp+=1;
-            mob.sdx-=0.01;
-        }else if(random==1){
-            draw(16,4,mob.hp/2,mob.sdx-2,mob.sdy,mob.height-40,mob.width-40,"sam.png")
-            mob.hp+=1;
-            mob.sdx-=0.01;
-        }else if(random==2){
-            draw(16,5,mob.hp*2,mob.sdx,mob.sdy,mob.height-30,mob.width+100,"sun.png")
-            mob.hp+=7;
-            mob.sdx-=0.01;
-        }else{
-            //стандартный моб
-            draw(16,5,mob.hp/2,mob.sdx,mob.sdy+0.1,mob.height-90,mob.width-50)
-        }
-    }else{
-        timermobs+=2
-    }
-    //постоянная статистика
-    ctx.fillStyle="rgba(20,260,20,0.7)"
-    ctx.font="60px Impact"
-        ctx.fillText(LvlUp.xp+"/"+LvlUp.needXP+"  |"+LvlUp.points, 300, 130);
-        ctx.fillText(Math.round(gun.power)+"/"+gun.size*10, 300, 190);
-    //Огненный текст обработка
-    if (Ftext.Fire>0){
-        Ftext.Fire-=1;
-        ctx.fillStyle="rgba(260,260,260,"+Ftext.Fire/100+")"
-        ctx.font="60px Impact"
-        ctx.fillText(Ftext.Text, Ftext.x, Ftext.y);
-        Ftext.x+=0.5;
-        Ftext.y+=0.5;
-        if (Ftext.Fire==0){
-            Ftext.x=10;
-            Ftext.y=10;
-        }
+function getArtifact(){
+    random = getRandomInt(10)//0-9
+    switch (random){
+        case 0:
+            //легендарный меч
+            SFire2("Легендарный бафф! Урон по боссам х2",400)
+            boss.hp/=2
+        break
+        case 1:
+            //легендарный щит
+            SFire2("Легендарный бафф! Урон по мобам х2",400)
+            mob.hp/=2
+        break
+        case 2:
+        case 3:
+            SFire2("Эпический бафф! Заряды х2",400)
+            gun.power*=2;
+        break
+        default:
+            //+к урону
+            SFire2("За босса вы получили бонус к урону!",400)
+            gun.dmg+=1;
+        break
     }
 }
 function fdmg(object,dmg){
     // obj[obj.length]=new block(object.x,object.y,10,10,1);
     object.hp-=dmg;
-    object.color="rgba("+object.hp+","+object.hp*5+","+object.hp*10+","+0.01*object.hp+")"
+    object.color="rgba("+object.hp/10+","+object.hp+","+object.hp*10+","+0.002*object.hp+")"
     if (object.hp<=0){
         object.kill=true;
+        if (object.type=="boss"){ 
+            
+            boss.sx+=3
+            boss.hp*=3
+            boss.sdx+=-0.01
+            mob.lvl+=1;
+            SpawnBoss()
+            getArtifact()
+            XP(1);
+        }
         XP(1);
     }
 }
@@ -202,6 +176,10 @@ function getRandomInt(max) {
 function SFire(text,fire){
     Ftext.Text=text
     Ftext.Fire=fire
+}
+function SFire2(text,fire){
+    Ftext2.Text=text
+    Ftext2.Fire=fire
 }
 function XP(points){
     //опыт
@@ -226,7 +204,7 @@ function touch(obj1,obj2){
         if ((obj1.y+obj1.height/*высота пульки*/>obj2.y)&&(obj1.y-obj2.height<obj2.y))//по y +obj2.height
         {
             obj1.kill=true;
-            fdmg(obj2,gun.dmg+gun.power)
+            fdmg(obj2,gun.dmg+gun.power*2)
             
         }
     }
@@ -269,5 +247,108 @@ canvas.addEventListener(`mousemove`, setPos);
 function setPos({layerX, layerY}) {
     [mouse.x, mouse.y] = [layerX, layerY];
   }
+//спавним следующего босса
+function SpawnBoss(){
+    draw(boss.sx,2,boss.hp,boss.sdx,0,715,740,"ktulhu.png","boss")
+    
+}
+  //цикл игры
+function time(){
+    //POWER
+    if (gun.power>=gun.size*20){
+    }else{
+        
+        gun.power+=gun.size/100;
+    }     
+    
+    //фон
+    canvas.width = window.innerWidth-15;
+    canvas.height = window.innerHeight-15;
+    
+    ctx.fillStyle = 'rgb(30,30,30)'
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    //рисуем пули
+    for (j=0;j<bullets.length;j+=1){
+        if (bullets[j].y>1000){
+            bullets[j].kill=true
+        }
+        bgravity(bullets[j]);
+    }
+    //касания и объекты
+    for(j=0;j<obj.length;j++){
+        if (!obj[j].kill){
+        objgrav(obj[j])
+        for(k=0;k<bullets.length;k+=1){
+            if (!bullets[k].kill){
+            touch(bullets[k],obj[j])
+            }
+        }
+        }
+    }
+    //спавн мобов -------------------------------------------------
+    if (timermobs>=2300){
+        timermobs=0
+        //спавн
+        //рандомный враг
+        random = getRandomInt(mob.lvl)//0,1,2,3,4
+        mob.hp+=1;
+        mob.sdx-=0.01;
+        if (random==0){
+            //N
+            draw(16,5,mob.hp/2,mob.sdx,mob.sdy+0.1,mob.height-90,mob.width-50)
+        }else if(random==1){
+            //sun
+            draw(16,5,mob.hp*2,mob.sdx,mob.sdy,mob.height-30,mob.width+100,"sun.png")
+            
+        }else if(random==2){
+            //sam
+            draw(16,4,mob.hp/2,mob.sdx-2,mob.sdy,mob.height-40,mob.width-40,"sam.png")
+            
+        }else if (random==3){
+            //стандартный моб
+            draw(16,3,mob.hp*2,mob.sdx-1,mob.sdy,mob.height,mob.width,"SA.png")
+        }
+        else if (random==4){
+            draw(16,3,mob.hp*3,mob.sdx/2,mob.sdy,mob.height+50,mob.width+50,"garou.gif")
+        }
+    }else{
+        timermobs+=2
+    }
+    //постоянная статистика
+    ctx.fillStyle="rgba(20,260,20,0.7)"
+    ctx.font="60px Impact"
+        ctx.fillText(LvlUp.xp+"/"+LvlUp.needXP+"  |"+LvlUp.points, 300, 130);
+        ctx.fillText(Math.round(gun.power)+"/"+gun.size*20, 300, 190);
+    //Огненный текст обработка
+    if (Ftext.Fire>0){
+        Ftext.Fire-=1;
+        ctx.fillStyle="rgba(260,260,260,"+Ftext.Fire/100+")"
+        ctx.font="60px Impact"
+        ctx.fillText(Ftext.Text, Ftext.x, Ftext.y);
+        Ftext.x+=0.5;
+        Ftext.y+=0.5;
+        if (Ftext.Fire==0){
+            Ftext.x=10;
+            Ftext.y=10;
+        }
+    }
+    //Огненный текст2 обработка
+    if (Ftext2.Fire>0){
+        Ftext2.Fire-=1;
+        ctx.fillStyle="rgba(20,260,260,"+Ftext2.Fire/100+")"
+        ctx.font="60px Impact"
+        ctx.fillText(Ftext2.Text, Ftext2.x, Ftext2.y);
+        Ftext2.x+=0;
+        Ftext2.y+=0.1;
+        if (Ftext2.Fire==0){
+            Ftext2.x=110;
+            Ftext2.y=210;
+        }
+    }
+}
 //запускаем игру
-setInterval(time,1);
+function init(){
+    SpawnBoss()
+    setInterval(time,1);
+}
+init()
