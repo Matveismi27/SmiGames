@@ -155,7 +155,7 @@ function getArtifact(){
         default:
             //+к урону
             SFire2("За босса вы получили бонус к урону!",400)
-            gun.dmg+=2;
+            gun.dmg+=mob.lvl;
         break
     }
 }
@@ -299,7 +299,7 @@ function time(){
         if (autofiresleep%(200 - gun.Count*10)==1){
             DoubleFire()
             autofiresleep+=1
-            gun.power-=5;
+            gun.power*=0.65;
         }else{
             autofiresleep+=1
         }
