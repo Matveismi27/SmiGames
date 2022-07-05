@@ -222,7 +222,7 @@ function print(txt){
 }
 function physics(){
     if(phxON){
-        ctx.fillStyle="rgba(20,260,20,0.7)"
+        ctx.fillStyle="rgba(20,260,20,"+gun.compas+")"
             ctx.font="20px Impact"
             ctx.fillText(Math.round(gun.power), 10, 20);
         if (gun.power<200){
@@ -274,6 +274,7 @@ gun = {//возможности пушки
     size:1,//2
     Count:0,//0
     power:0,//0
+    compas:0.6,//0.3
     wolf:false,//призыв волка false
     moon:false//отталкивающие снаряды false
 }
@@ -850,6 +851,7 @@ function storytale(){
             case 93:
                 p1.render()
                 print("Сейчас проверим!")
+                gun.compas=0.2
                 document.getElementById("text").style.background= 'linear-gradient(45deg, rgba(255, 180, 110, 0.9) 0%, rgba(131, 224, 131, 0.7) 80%)'
                 document.getElementById("texthead").style.background= 'linear-gradient(45deg, rgba(255, 180, 110, 0.9) 0%, rgba(131, 224, 131, 0.7) 80%)'
             break
