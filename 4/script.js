@@ -1027,9 +1027,9 @@ function storytale(){
                 physics()
                 lock()
                 print("Он очень жирный но ты справишся")
-                draw(20,10,200,-0.1,0,240,240,"img/sun.png","key","sun")
-                draw(20,10,100,-0.5,0,120,120,"img/hel.png","","jump")
-                draw(20,10,100,-0.5,0,120,120,"img/hel.png","","jump")
+                draw(60,10,200,-0.1,0,240,240,"img/sun.png","key","sun")
+                draw(60,10,100,-0.5,0,120,120,"img/hel.png","","jump")
+                draw(60,10,100,-0.5,0,120,120,"img/hel.png","","jump")
             break
             case 129:
                 print("Так, где КОНКРЕТНО сейчас Армстронг?")
@@ -1044,10 +1044,13 @@ function storytale(){
             break
             case 132:
                 p5.render()
+                phxON=true;
+                physics()
+                lock()
                 print("да")
-                draw(40,10,200,-0.1,0,240,240,"img/sun.png","key","moon")
-                draw(40,10,100,-0.5,0,120,120,"img/hel.png","","jump")
-                draw(40,10,100,-0.5,0,120,120,"img/hel.png","","jump")
+                draw(60,10,200,-0.1,0,240,240,"img/sun.png","key","moon")
+                draw(60,10,100,-0.5,0,120,120,"img/hel.png","","jump")
+                draw(60,10,100,-0.5,0,120,120,"img/hel.png","","jump")
             break
             case 133:
                 print("Кхем... чет мне уже плохо... Ладно оставьте меня...")
@@ -1130,6 +1133,10 @@ function storytale(){
                 phxON=true;
                 physics()
                 lock()
+                draw(30,10,10,0,0,100,100,"img/Swall.png","","choice")
+                draw(40,10,10,0,0,100,100,"img/Swall.png","","choice")
+                draw(30,20,10,0,0,100,100,"img/Swall.png","","choice")
+                draw(40,20,10,0,0,100,100,"img/Swall.png","","choice")
                 draw(83,0,1000,-0.2,0,250,400,"img/Senator.png","key","SA")
                 print("YOU CAN'T HURT ME, "+player_name+"!")
             break
@@ -1142,6 +1149,15 @@ function storytale(){
                 phxON=true;
                 physics()
                 lock()
+                draw(10,10,10,0,0,100,100,"img/Swall.png","","choice")
+                draw(20,10,10,0,0,100,100,"img/Swall.png","","choice")
+                draw(10,20,10,0,0,100,100,"img/Swall.png","","choice")
+                draw(20,20,10,0,0,100,100,"img/Swall.png","","choice")
+                
+                draw(30,10,10,0,0,100,100,"img/Swall.png","","choice")
+                draw(40,10,10,0,0,100,100,"img/Swall.png","","choice")
+                draw(30,20,10,0,0,100,100,"img/Swall.png","","choice")
+                draw(40,20,10,0,0,100,100,"img/Swall.png","","choice")
                 draw(83,0,1000,-0.3,0,250,400,"img/Senator.png","key","SA")
                 print("МЕМЕS")
             break
