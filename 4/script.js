@@ -645,7 +645,7 @@ function storytale(){
                 draw(50,4,30,-0.2,0,80,60,"img/solder.png","physics","choice")
                 draw(70,8,30,-0.2,0,80,60,"img/solder.png","physics","choice")
                 draw(90,4,30,-0.2,0,80,60,"img/solder.png","physics","choice")
-                draw(40,4,100,-0.1,0,100,100,"img/armbot2.png","physics","choice")
+                draw(40,4,150,-0.1,0,120,100,"img/armbot2.png","physics","choice")
                 draw(100,8,30,-0.2,0,80,60,"img/solder.png","physics","choice")
                 draw(60,6,300,-0.4,0,180,200,"img/dog.png","key","jump")
                 print("Тебе не победить!")
@@ -766,7 +766,7 @@ function storytale(){
                 draw(30,20,200,-0.3,0,120,120,"img/armbot1.png","physics","jump")
                 draw(50,18,200,-0.4,0,120,120,"img/armbot1.png","physics","jump")
                 draw(70,16,200,-0.5,0,120,120,"img/armbot1.png","physics","jump")
-                draw(80,20,400,-1,0,80,80,"img/mistral.png","key","jump")
+                draw(60,20,400,-1,0,80,80,"img/mistral.png","key","jump")
             break
             case 74:
                 p0.render()
@@ -930,21 +930,21 @@ function storytale(){
                 phxON=true;
                 physics()
                 lock()
-                draw(40,10,60,-0.9,0,240,240,"img/Sam downer.png","key","physics")
+                draw(60,10,60,-0.9,0,240,240,"img/Sam downer.png","key","physics")
             break
             case 108:
                 print("Как не победил?!?!")
                 phxON=true;
                 physics()
                 lock()
-                draw(44,10,80,-0.9,0,240,240,"img/Sam downer.png","key","physics")
+                draw(65,10,80,-0.9,0,240,240,"img/Sam downer.png","key","physics")
             break
             case 109:
                 print("Так я начинаю что-то подозревать")
                 phxON=true;
                 physics()
                 lock()
-                draw(50,10,100,-0.9,0,240,240,"img/Sam downer.png","key","physics")
+                draw(70,10,100,-0.9,0,240,240,"img/Sam downer.png","key","physics")
             break
             case 110:
                 print("А я точно samdowner?")
@@ -986,24 +986,24 @@ function storytale(){
                 phxON=true;
                 physics()
                 lock()
-                draw(15,10,100,-0.9,0,240,240,"img/sam.png","key","physics")
-                draw(10,10,200,-0.3,0,240,240,"img/sun.png","key","physics")
+                draw(50,8,100,-0.6,0,240,240,"img/sam.png","key","physics")
+                draw(40,10,200,-0.15,0,240,240,"img/sun.png","key","physics")
             break
             case 121:
                 print("Хихихи")
                 phxON=true;
                 physics()
                 lock()
-                draw(15,10,100,-0.9,0,240,240,"img/sam.png","key","physics")
-                draw(10,10,200,-0.3,0,240,240,"img/sun.png","key","physics")
+                draw(50,8,100,-0.7,0,240,240,"img/sam.png","key","physics")
+                draw(40,10,200,-0.13,0,240,240,"img/sun.png","key","physics")
             break
             case 122:
                 print("Хахаха,все я устал")
                 phxON=true;
                 physics()
                 lock()
-                draw(15,10,100,-0.9,0,240,240,"img/sam.png","key","physics")
-                draw(10,10,200,-0.1,0,240,240,"img/sun.png","key","physics")
+                draw(50,8,100,-0.8,0,240,240,"img/sam.png","key","physics")
+                draw(40,10,200,-0.1,0,240,240,"img/sun.png","key","physics")
             break
             case 123:
                 print("Ладно пора играть по настоящему")
