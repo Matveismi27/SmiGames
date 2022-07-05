@@ -986,7 +986,7 @@ function storytale(){
                 phxON=true;
                 physics()
                 lock()
-                draw(50,8,100,-0.6,0,240,240,"img/sam.png","key","physics")
+                draw(50,8,100,-0.6,0,240,240,"img/sam.png","","physics")
                 draw(40,10,200,-0.15,0,240,240,"img/sun.png","key","physics")
             break
             case 121:
@@ -994,7 +994,7 @@ function storytale(){
                 phxON=true;
                 physics()
                 lock()
-                draw(50,8,100,-0.7,0,240,240,"img/sam.png","key","physics")
+                draw(50,8,100,-0.7,0,240,240,"img/sam.png","","physics")
                 draw(40,10,200,-0.13,0,240,240,"img/sun.png","key","physics")
             break
             case 122:
@@ -1002,7 +1002,7 @@ function storytale(){
                 phxON=true;
                 physics()
                 lock()
-                draw(50,8,100,-0.8,0,240,240,"img/sam.png","key","physics")
+                draw(50,8,100,-0.8,0,240,240,"img/sam.png","","physics")
                 draw(40,10,200,-0.1,0,240,240,"img/sun.png","key","physics")
             break
             case 123:
