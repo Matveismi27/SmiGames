@@ -1045,9 +1045,9 @@ function storytale(){
             case 132:
                 p5.render()
                 print("да")
-                draw(20,10,200,-0.1,0,240,240,"img/sun.png","key","moon")
-                draw(20,10,100,-0.5,0,120,120,"img/hel.png","","jump")
-                draw(20,10,100,-0.5,0,120,120,"img/hel.png","","jump")
+                draw(40,10,200,-0.1,0,240,240,"img/sun.png","key","moon")
+                draw(40,10,100,-0.5,0,120,120,"img/hel.png","","jump")
+                draw(40,10,100,-0.5,0,120,120,"img/hel.png","","jump")
             break
             case 133:
                 print("Кхем... чет мне уже плохо... Ладно оставьте меня...")
