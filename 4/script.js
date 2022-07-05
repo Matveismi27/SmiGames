@@ -1023,6 +1023,9 @@ function storytale(){
                 print("В таком случии нам нужно тебя убить")
             break
             case 128:
+                phxON=true;
+                physics()
+                lock()
                 print("Он очень жирный но ты справишся")
                 draw(20,10,200,-0.1,0,240,240,"img/sun.png","key","sun")
                 draw(20,10,100,-0.5,0,120,120,"img/hel.png","","jump")
