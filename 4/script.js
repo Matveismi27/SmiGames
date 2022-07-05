@@ -260,7 +260,7 @@ function draw(x , y, hp, dx, dy, height,width,src,type,type2){
 way=0;
 i=0
 zipped=false;
-story=34;
+story=0;
 text=document.getElementById("text")
 bullets=[];//массив для пуле и объектов
 objects=[];
