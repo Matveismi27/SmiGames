@@ -6,6 +6,7 @@ mouse = {
 }
 //---------------------------------------------
 //ивенты -- в основном для пушки
+document.oncontextmenu = cmenu; function cmenu() { return false; }
 //просто для позиции мыши
 canvas.addEventListener(`mousemove`, setPos);
 function setPos({layerX, layerY}) {
@@ -181,12 +182,12 @@ function touch(obj1,obj2){
         {
             obj1.kill=true;
             if (obj1.src=="img/a1.png"){
-                obj2.x+=1;
+                obj2.x+=2;
             }
             if (obj2.type2=="moon"){
                 obj2.x-=1;
             }else if (obj2.type2=="sun"){
-                draw(25,10,10,-0.5,0,50,50,"img/df.png","physics","")
+                draw(40,10,10,-0.5,0,50,50,"img/df.png","physics","")
             }
             fdmg(obj2,gun.dmg+obj1.size)
             
@@ -1106,7 +1107,7 @@ function storytale(){
                 phxON=true;
                 physics()
                 lock()
-                draw(83,2,500,-0.1,0,250,400,"img/Senator.png","key","SA")
+                draw(83,2,500,-0.1,0,400,250,"img/Senator.png","key","SA")
                 print("В любом случае")
             break
             case 145:
@@ -1119,7 +1120,7 @@ function storytale(){
                 phxON=true;
                 physics()
                 lock()
-                draw(83,0,500,-0.2,0,250,400,"img/Senator.png","key","SA")
+                draw(83,0,500,-0.2,0,400,250,"img/Senator.png","key","SA")
                 print("Хахаха НЕ ЧУВСТВУЮ")
             break
             case 148:
@@ -1139,7 +1140,7 @@ function storytale(){
                 draw(40,10,10,0,0,100,100,"img/Swall.png","","choice")
                 draw(30,20,10,0,0,100,100,"img/Swall.png","","choice")
                 draw(40,20,10,0,0,100,100,"img/Swall.png","","choice")
-                draw(83,0,1000,-0.2,0,250,400,"img/Senator.png","key","SA")
+                draw(83,0,1000,-0.2,0,400,250,"img/Senator.png","key","SA")
                 print("YOU CAN'T HURT ME, "+player_name+"!")
             break
             case 151:
@@ -1160,7 +1161,7 @@ function storytale(){
                 draw(40,10,10,0,0,100,100,"img/Swall.png","","choice")
                 draw(30,20,10,0,0,100,100,"img/Swall.png","","choice")
                 draw(40,20,10,0,0,100,100,"img/Swall.png","","choice")
-                draw(83,0,1000,-0.3,0,250,400,"img/Senator.png","key","SA")
+                draw(83,0,1000,-0.24,0,400,250,"img/Senator.png","key","SA")
                 print("МЕМЕS")
             break
             case 153:
