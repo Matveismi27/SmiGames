@@ -6,7 +6,7 @@ mouse = {
 }
 //---------------------------------------------
 //ивенты -- в основном для пушки
-document.oncontextmenu = cmenu; function cmenu() { return false; }
+document.oncontextmenu = cmenu; function cmenu() { return false; } //чтобы нельзя было пкм
 //просто для позиции мыши
 canvas.addEventListener(`mousemove`, setPos);
 function setPos({layerX, layerY}) {
@@ -22,8 +22,11 @@ canvas.onclick = function Fire(){
         DY= mouse.y-gun.y;
         HYP = Math.sqrt(DX*DX+DY*DY)
         direction = Math.asin(DY/HYP)
-    bullets[bullets.length]=new bullet(gun.x,gun.y,Math.cos(direction)*gun.db,Math.sin(direction)*gun.db,gun.size)
-    gun.power=0;//обнуляем повер
+    bullets[bullets.length]=new bullet(gun.x,gun.y,Math.cos(direction)*gun.db,Math.sin(direction)*gun.db,gun.size,)
+    gun.power-=5;//обнуляем повер
+    if (gun.power<0){
+        gun.power=0;
+    }
     }
 }
 //-------------------------------------------
@@ -62,17 +65,18 @@ class item{
     }
 }
 class bullet{
-    constructor(x,y,dx,dy,size,img){
+    constructor(x,y,dx,dy,size,img,type){
         this.x=x||10;
         this.y=y||10;
         this.dx=dx||5;
         this.dy=dy||5;
-        this.size=size+gun.power/20||2+gun.power/20;
+        this.size=size+1+gun.power/20||2+gun.power/20;
         this.hp=1;
         this.color="rgb("+(gun.power)+",60,60)"
         this.kill=false;
         this.img=new Image();
         this.img.src=img||"img/none.png"
+        this.type=type||""
     }
 }
 class block{
@@ -143,7 +147,7 @@ function bgravity(bullet){
 function objgrav(object){
     if (!object.kill){
         if (object.type2=="SA"){
-            object.hp+=0.1;
+            object.hp+=0.2;
         }
         if (object.type=="boss"){
             
@@ -181,15 +185,15 @@ function touch(obj1,obj2){
         if ((obj1.y+obj1.size/*высота пульки*/>obj2.y)&&(obj1.y-obj2.height<obj2.y))//по y +obj2.height
         {
             obj1.kill=true;
-            if (obj1.src=="img/a1.png"){
-                obj2.x+=2;
+            if (obj1.type=="moon"){
+                obj2.x+=1; 
             }
             if (obj2.type2=="moon"){
                 obj2.x-=1;
             }else if (obj2.type2=="sun"){
-                draw(40,10,10,-0.5,0,50,50,"img/df.png","physics","")
+                draw(60,10,10,-0.4,0,100,100,"img/df.png","physics","")
             }
-            fdmg(obj2,gun.dmg+obj1.size)
+            fdmg(obj2,gun.dmg+obj1.size-1)
             
         }
     }
@@ -290,7 +294,7 @@ physics()
 //--------------------------------------------------------------
 //создание объектов
 l1 = new loc ({
-    text:"Пробел чтобы продолжить",
+    text:"Пробел чтобы продолжить E - пауза",
     name:"Лаборатория",
     fon:"img/bg1.png"
 })
@@ -305,22 +309,22 @@ l3 = new loc({
     fon:"img/bg3.jpg"
 })
 l4 = new loc({
-    text:"чет он больно дружелюбный<audio src='files/2.mp3' autoplay='autoplay'>",
+    text:"Система энергии незначительно усиливает пули однако её применение раскроется позже<audio src='files/2.mp3' autoplay='autoplay'>",
     name:"деревушка у города",
     fon:"img/bg4.jpg"
 })
 l5 = new loc({
-    text:"Нет, ещё не город<audio src='files/3.mp3' autoplay='autoplay'>",
+    text:"Е - пауза Q - кибер пёс(20 энергии но урон того стоит, проблема только в том чтобы попасть)<audio src='files/3.mp3' autoplay='autoplay'>",
     name:"начало города",
     fon:"img/bg5.jpg"
 })
 l6 = new loc({
-    text:"Город?<audio src='files/4.mp3' autoplay='autoplay'>",
+    text:"Подсказка: мелкие чувачки легко выносятся обычными атаками а вот Монсун от них приближается, против самого босса будет профитней использовать пса(Q)<audio src='files/4.mp3' autoplay='autoplay'>",
     name:"Город!",
     fon:"img/bg6.jpg"
 })
 l7 = new loc({
-    text:"Почему не город?!<audio src='files/5.mp3' autoplay='autoplay'>",
+    text:"Так, внимание, секретная фича, если накопить 200 энергии то пули станут максимально смертоносными, для максимального урона рекомендую держать показатель высоким<audio src='files/5.mp3' autoplay='autoplay'>",
     name:"Где-то около города",
     fon:"img/bg7.jpg"
 })
@@ -382,23 +386,23 @@ function storytale(){
         
         switch (story){
             case 1:
-                print("Могу с уверенностью сказать - долго ты не проживешь")
+                print("Могу с уверенностью сказать - долго ты не выдержишь")
                 break
             
             case 2:
-                if (num>2){
-                    print("Ты как ни как уже не первый")
+                if (num<2){
+                    print("Мы тут пока сами хз как все работает")
                 }else{
-                    print("А все потому что мы сами хз работает наша система или нет")
+                    print("Мы уже не первый раз берём какого то чела из другого измерения и никто не может справится с сюжетом, неужели эту игру так сложно пройти?")
                 }
                 break
             
             case 3:
-                print("Твоя задача протестировать нашу новую систему боя!")
+                print("Твоя задача победить нашего общего врага")
                 break
             
             case 4:
-                print("Начнем с простенького теста чтобы у тебя хотябы были шансы")
+                print("Начнем с простенького теста чтобы у тебя хотябы были шансы, нам же нужно тебя проверить")
                 // p1.change("files/evil.png")
                 // p1.render()
                 
@@ -448,7 +452,7 @@ function storytale(){
                 break
             case 11:
                 if (num>2){
-                    print("Что за жалкое подобие поля? Монсун опять за свое, ну сколько можно?")
+                    print("Что за жалкое подобие поля? Монсун опять за свое, ну сколько можно? Мы это уже проходили, нужно делать сложнее")
                 }else{
                     print("Что за жалкое подобие поля? Монсун тебя жалеет")
                 }
@@ -458,7 +462,7 @@ function storytale(){
                 canvas.style.width="800px"
                 canvas.width=800
                 canvas.height=500
-                print("Посмотрим как ты справишся с настоящим противником")
+                print("Посмотрим как ты справишся с настоящим противником, не волнуйся это лишь собачка для битья, у неё нет интелекта")
                 phxON=true;
                 physics()
                 lock()
@@ -476,11 +480,11 @@ function storytale(){
                 break
             case 15:
                 p3.render()
-                print("И всетаки его можно улучшить")
+                print("И все-таки его можно улучшить")
                 break
             case 16:
                 p1.render()
-                print("Ладно паренёк, твое первое серьёзное задание!")
+                print("Ладно, твое первое серьёзное задание!")
                 break
             case 17:
                 print("Раз уж ты такое выдержал было бы некрасиво не посвятить тебя в курс дела")
@@ -494,19 +498,19 @@ function storytale(){
                 if (num<=1){
                     print("Стал президентом Америки")
                 }else{
-                    print("Стал президентом Америки... какого хуя нам приходится это каждый раз повторять???")
+                    print("Стал президентом Америки... какого хрена нам приходится это каждый раз повторять???")
                 }
                 break
             case 20:
                 p1.render()
-                if(num>10){
+                if(num>4){
                     print("Ладно, я и сам уже устал, хватит этих разъяснений, кому вообще нужен сюжет?")
                     story=26
                 }
                 else if (num>2){
-                    print("К сожелению этот диалог нельзя скипнуть, как бы он не был надоедлив... Вернемся к Армстронгу! Это именно он виновен в войне на украине!")
+                    print("К сожелению этот диалог нельзя скипнуть, как бы он не был надоедлив... Вернемся к Армстронгу!")
                 }else{
-                    print("И что самое страшное это он виновен в войне на Украине!")}
+                    print("И что самое страшное он развязывает войну! Опять!")}
                 break
             case 21:
                 p3.render()
@@ -514,18 +518,18 @@ function storytale(){
                 break
             case 22:
                 p1.render()
-                print("Ты возможно спросишь, почему именно он? Почему Украина? Дело вот в чем")
+                print("Ты возможно спросишь, почему именно он? Почему снова война? Дело вот в чем")
                 break
             case 23:
                 print("Война выгодна Америке, производство оружия приносит большие деньги")
                 break
                 
             case 24:
-                print("Он нанял разжигателей войн которые стравили Славян")
+                print("Армстронг это прекрасно понимает и разжигает одну войну за другой")
 
                 break
             case 25:
-                print("Россия и Украина были лучшим вариантом т.к. именно они(Россия) главная угроза Америки")
+                print("Нам следует его остановить во благо мира!")
                 break
             case 26:
                 p3.render()
@@ -563,7 +567,7 @@ function storytale(){
                 lock()
                 draw(20,4,50,-0.1,0,80,100,"img/hel.png","","choice")
                 draw(35,8,50,-0.1,0,80,100,"img/hel.png","","choice")
-                draw(50,5,166,-0.1,0,180,200,"img/metalgear.png","key","choice")
+                draw(50,5,150,-0.1,0,180,200,"img/metalgear.png","key","choice")
                 print("Это что METAL GEAR!?!?!?!?!")
             break
             case 32:
@@ -578,7 +582,7 @@ function storytale(){
             break
             case 35:
                 print("Щас я прокачаю тебя")
-                gun.dmg+=1
+                gun.size+=1
                 gun.Count+=0.1
                 gun.db+=1
                 gun.y+=10
@@ -852,9 +856,11 @@ function storytale(){
             case 93:
                 p1.render()
                 print("Сейчас проверим!")
-                gun.compas=0.2
-                document.getElementById("text").style.background= 'linear-gradient(45deg, rgba(255, 180, 110, 0.9) 0%, rgba(131, 224, 131, 0.7) 80%)'
-                document.getElementById("texthead").style.background= 'linear-gradient(45deg, rgba(255, 180, 110, 0.9) 0%, rgba(131, 224, 131, 0.7) 80%)'
+                gun.compas=0.1
+                document.getElementById("text").style.background= 'white'
+                document.getElementById("texthead").style.background= 'white'
+                document.getElementById("text").style.color= 'black'
+                document.getElementById("texthead").style.color= 'black'
             break
             case 94:
                 p1.render()
@@ -892,7 +898,7 @@ function storytale(){
             break
             case 97:
                 gun.moon=true
-                print("Так а теперь, внимание, энерго пули, нажимай W чтобы быстро шмалять отталкивающими снарядами за энергию")
+                print("Так а теперь, внимание, энергетические пули, нажимай W чтобы быстро шмалять отталкивающими снарядами за энергию")
             break
             case 98:
                 print("вам стоит выдвигаться дальше")
@@ -998,15 +1004,15 @@ function storytale(){
                 physics()
                 lock()
                 draw(50,8,100,-0.7,0,240,240,"img/sam.png","","physics")
-                draw(40,10,200,-0.13,0,240,240,"img/sun.png","key","physics")
+                draw(40,10,400,-0.13,0,240,240,"img/sun.png","key","physics")
             break
             case 122:
                 print("Хахаха,все я устал")
                 phxON=true;
                 physics()
                 lock()
-                draw(50,8,100,-0.8,0,240,240,"img/sam.png","","physics")
-                draw(40,10,200,-0.1,0,240,240,"img/sun.png","key","physics")
+                draw(60,8,110,-0.8,0,240,240,"img/sam.png","","physics")
+                draw(40,10,600,-0.1,0,240,240,"img/sun.png","key","physics")
             break
             case 123:
                 print("Ладно пора играть по настоящему")
@@ -1023,16 +1029,16 @@ function storytale(){
             break
             case 127:
                 l7.render()
-                print("В таком случии нам нужно тебя убить")
+                print("В таком случае нам нужно тебя убить")
             break
             case 128:
                 phxON=true;
                 physics()
                 lock()
                 print("Он очень жирный но ты справишся")
-                draw(60,10,200,-0.1,0,240,240,"img/sun.png","key","sun")
-                draw(60,10,100,-0.5,0,120,120,"img/hel.png","","jump")
-                draw(60,10,100,-0.5,0,120,120,"img/hel.png","","jump")
+                draw(60,10,1000,-0.1,0,240,240,"img/sun.png","key","sun")
+                draw(60,18,200,-0.5,0,120,120,"img/hel.png","","jump")
+                draw(60,4,200,-0.5,0,120,120,"img/hel.png","","jump")
             break
             case 129:
                 print("Так, где КОНКРЕТНО сейчас Армстронг?")
@@ -1051,9 +1057,9 @@ function storytale(){
                 physics()
                 lock()
                 print("да")
-                draw(60,10,200,-0.1,0,240,240,"img/sun.png","key","moon")
-                draw(60,10,100,-0.5,0,120,120,"img/hel.png","","jump")
-                draw(60,10,100,-0.5,0,120,120,"img/hel.png","","jump")
+                draw(60,0,1200,-0.1,0,400,400,"img/sun.png","key","sun")
+                draw(60,20,100,-0.5,0,120,140,"img/hel.png","","jump")
+                draw(60,0,100,-0.5,0,120,140,"img/hel.png","","jump")
             break
             case 133:
                 print("Кхем... чет мне уже плохо... Ладно оставьте меня...")
@@ -1066,17 +1072,17 @@ function storytale(){
                 print("Так, мы близко, но тут охрана")
             break
             case 136:
-                print("Ты с таким уже сталкивался, это не должно доставить проблемы")
+                print("Ты с подобным уже сталкивался, это не должно доставить проблемы")
                 phxON=true;
                 physics()
                 lock()
-                draw(30,4,50,-0.1,0,80,80,"img/dog.png","physics","choice")
-                draw(40,8,50,-0.1,0,80,80,"img/dog.png","physics","choice")
-                draw(45,5,50,-0.1,0,80,80,"img/dog.png","physics","choice")
-                draw(55,2,50,-0.1,0,80,80,"img/dog.png","physics","choice")
-                draw(60,6,50,-0.1,0,80,80,"img/dog.png","physics","choice")
-                draw(70,7,50,-0.1,0,80,80,"img/dog.png","physics","choice")
-                draw(83,2,80,-0.1,0,120,180,"img/hel.png","key","choice")
+                draw(30,4,150,-0.1,0,80,80,"img/dog.png","physics","choice")
+                draw(40,8,150,-0.1,0,80,80,"img/dog.png","physics","choice")
+                draw(45,5,150,-0.1,0,80,80,"img/dog.png","physics","choice")
+                draw(55,2,150,-0.1,0,80,80,"img/dog.png","physics","choice")
+                draw(60,6,150,-0.1,0,80,80,"img/dog.png","physics","choice")
+                draw(70,7,150,-0.1,0,80,80,"img/dog.png","physics","choice")
+                draw(83,2,480,-0.1,0,120,180,"img/hel.png","key","choice")
             break
             case 137:
                 print("Да, это было быстро")
@@ -1107,11 +1113,11 @@ function storytale(){
                 phxON=true;
                 physics()
                 lock()
-                draw(83,2,500,-0.1,0,400,250,"img/Senator.png","key","SA")
+                draw(60,2,500,-0.1,0,400,250,"img/Senator.png","key","SA")
                 print("В любом случае")
             break
             case 145:
-                print("Как у тебя вышло?")
+                print("Как у тебя вышло повредить меня?")
             break
             case 146:
                 print("Ну ладно мне не в первой")
@@ -1120,12 +1126,12 @@ function storytale(){
                 phxON=true;
                 physics()
                 lock()
-                draw(83,0,500,-0.2,0,400,250,"img/Senator.png","key","SA")
-                print("Хахаха НЕ ЧУВСТВУЮ")
+                draw(70,0,400,-0.2,0,400,300,"img/Senator.png","key","SA")
+                print("Хахаха, НЕ ЧУВСТВУЮ")
             break
             case 148:
                 p3.render()
-                print("Окей, так просто его не победить, я пойду на риск... я усилю твою ЭНЕРГИЮ")
+                print("Окей, так просто его не победить, я пойду на риск... я усилю твою ЭНЕРГИЮ... воспользуйся этим как можешь")
                 gun.Count+=0.1
             break
             case 149:
@@ -1140,7 +1146,7 @@ function storytale(){
                 draw(40,10,10,0,0,100,100,"img/Swall.png","","choice")
                 draw(30,20,10,0,0,100,100,"img/Swall.png","","choice")
                 draw(40,20,10,0,0,100,100,"img/Swall.png","","choice")
-                draw(83,0,1000,-0.2,0,400,250,"img/Senator.png","key","SA")
+                draw(80,0,800,-0.2,0,400,400,"img/Senator.png","key","SA")
                 print("YOU CAN'T HURT ME, "+player_name+"!")
             break
             case 151:
@@ -1157,15 +1163,28 @@ function storytale(){
                 draw(10,20,10,0,0,100,100,"img/Swall.png","","choice")
                 draw(20,20,10,0,0,100,100,"img/Swall.png","","choice")
                 
-                draw(30,10,10,0,0,100,100,"img/Swall.png","","choice")
-                draw(40,10,10,0,0,100,100,"img/Swall.png","","choice")
-                draw(30,20,10,0,0,100,100,"img/Swall.png","","choice")
-                draw(40,20,10,0,0,100,100,"img/Swall.png","","choice")
-                draw(83,0,1000,-0.24,0,400,250,"img/Senator.png","key","SA")
+                draw(30,15,10,0,0,100,100,"img/Swall.png","","choice")
+                draw(40,15,10,0,0,100,100,"img/Swall.png","","choice")
+                draw(30,30,10,0,0,100,100,"img/Swall.png","","choice")
+                draw(40,30,10,0,0,100,100,"img/Swall.png","","choice")
+                draw(80,0,1000,-0.24,0,400,400,"img/Senator.png","key","SA")
                 print("МЕМЕS")
             break
             case 153:
                 print("ух блять")
+                phxON=true;
+                physics()
+                lock()
+                draw(20,10,10,0,0,100,100,"img/Swall.png","","choice")
+                draw(30,10,10,0,0,100,100,"img/Swall.png","","choice")
+                draw(20,20,10,0,0,100,100,"img/Swall.png","","choice")
+                draw(30,20,10,0,0,100,100,"img/Swall.png","","choice")
+                
+                draw(40,20,10,0,0,100,100,"img/Swall.png","","choice")
+                draw(50,20,10,0,0,100,100,"img/Swall.png","","choice")
+                draw(40,30,10,0,0,100,100,"img/Swall.png","","choice")
+                draw(50,30,10,0,0,100,100,"img/Swall.png","","choice")
+                draw(70,0,2000,-0.15,0,400,400,"img/Senator.png","key","SA")
             break
             case 154:
                 print("признаю ты победил...")
@@ -1175,7 +1194,7 @@ function storytale(){
             break
             case 156:
                 p3.render()
-                print("Война на Украине?")
+                print("Какая то война?")
             break
             case 157:
                 p2.render()
@@ -1255,13 +1274,16 @@ document.addEventListener('keydown', function(event) {
                         DY= mouse.y-canvas.height/2;//снаряд летит с половины поля
                         HYP = Math.sqrt(DX*DX+DY*DY)
                         direction = Math.asin(DY/HYP)
-                    bullets[bullets.length]=new bullet(gun.x,canvas.height/2,Math.cos(direction)*gun.db,Math.sin(direction)*gun.db,gun.size*2,"img/a1.png")
+                    bullets[bullets.length]=new bullet(gun.x,canvas.height/2,Math.cos(direction)*gun.db,Math.sin(direction)*gun.db,gun.size*2,"img/a1.png","moon")
                 }
             }
         }else{
         alert('умение не прокачано')
         }
     }
+    if (event.code == 'KeyE') {
+        alert("игра на паузе")
+     }
     if (event.code == 'Space') {
         storytale()
       }
