@@ -174,7 +174,8 @@ function objgrav(object){
         }
         if(object.x<0){
             location = location
-            alert("Ты проиграл")
+            alert("Ты проиграл, перезагрузи страницу")
+            window.location.reload()
             
         }
     }
@@ -186,14 +187,14 @@ function touch(obj1,obj2){
         {
             obj1.kill=true;
             if (obj1.type=="moon"){
-                obj2.x+=1; 
+                obj2.x+=2; 
             }
             if (obj2.type2=="moon"){
-                obj2.x-=1;
+                obj2.x-=2;
             }else if (obj2.type2=="sun"){
-                draw(60,10,10,-0.4,0,100,100,"img/df.png","physics","")
+                draw(60,10,5,-0.4,0,100,100,"img/df.png","physics","")
             }
-            fdmg(obj2,gun.dmg+obj1.size-1)
+            fdmg(obj2,gun.dmg+obj1.size/2)
             
         }
     }
@@ -274,9 +275,9 @@ locked=false;
 gun = {//возможности пушки
     x:10,//10
     y:60,//60
-    db:2, //скорость пули 2
+    db:2.5, //скорость пули 2
     dmg:0,//1
-    size:1,//2
+    size:2,//2
     Count:0,//0
     power:0,//0
     compas:0.6,//0.3
@@ -371,8 +372,10 @@ p6 = new person({
 p1.render()
 l1.render()
 num=localStorage.getItem('num')||1
-player_name=localStorage.getItem('player_name')||prompt("введи свое имя, ты не сможешь его изменить");
+save=localStorage.getItem('save')||1
+player_name=localStorage.getItem('player_name')||prompt("введи свое имя, ты не сможешь его изменить (только если сбросишь его в конце игры)");
 localStorage.setItem('num', Number(num)+1)
+localStorage.setItem('save', Number(save))
 localStorage.setItem('player_name',player_name)
 print("Привет Испытуемый #"+num)
 
@@ -386,6 +389,7 @@ function storytale(){
         
         switch (story){
             case 1:
+               
                 print("Могу с уверенностью сказать - долго ты не выдержишь")
                 break
             
@@ -443,6 +447,10 @@ function storytale(){
             
             case 9:
                 print("Хаха, неплохо")
+                if (confirm("Хочешь загрузить сохранение? Это короче новая функция, все может сломаться, но если прям в лом все заново проходить то возможно сработает")){
+                    story = Number(save)-1
+                    gun = JSON.parse(localStorage.getItem("save_gun"))
+                }
                 break
 
             case 10:
@@ -459,6 +467,9 @@ function storytale(){
                 break
             
             case 12:
+                localStorage.setItem('save', Number(story))
+                l2.render()
+                p3.render()
                 canvas.style.width="800px"
                 canvas.width=800
                 canvas.height=500
@@ -472,6 +483,7 @@ function storytale(){
             
             case 13:
                 print("Я знал что ты справишся")
+                localStorage.setItem('save_gun',JSON.stringify(gun))
                 break
 
             case 14:
@@ -540,9 +552,13 @@ function storytale(){
                 print("Начнем мы с самого простого, уничтожить его ЗАВОДЫ. Но будь готов, все что они произвели - сразу отправляется на склады Армстронга, однако что-то ещё не успели отвезти на склады, Сейчас ты с этим и сразишся!")
                 break
             case 28:
+                localStorage.setItem('save', Number(story))
                 print("Не беспокойся эти псы без интелекта, убивай тех что перед тобой, вертолет бей в последнюю очередь")
                 l3.render()
+                canvas.style.width="800px"
+                canvas.style.height="500px"
                 canvas.width=800
+                canvas.height=500
                 phxON=true;
                 physics()
                 lock()
@@ -589,11 +605,19 @@ function storytale(){
                 canvas.style.width="800px"
                 canvas.width=800
                 canvas.height=400
+                localStorage.setItem('save_gun', JSON.stringify(gun))
             break
             case 36:
                 print("Вот так должно быть лучше, я активировал систему энергии")
             break
             case 37:
+                localStorage.setItem('save', Number(story))
+                canvas.style.width="800px"
+                canvas.style.height="500px"
+                canvas.width=800
+                canvas.height=500
+                p3.render()
+                l4.render()
                 print("Не будем медлить")
             break
             case 38:
@@ -694,6 +718,12 @@ function storytale(){
                 print("Погнали")
             break
             case 57:
+                localStorage.setItem('save', Number(story))
+                
+                canvas.style.width="800px"
+                canvas.style.height="500px"
+                canvas.width=800
+                canvas.height=500
                 p3.render()
                 l1.render()
                 print("Короче нужно остановить Армстронга, пёсель, ты знаешь где его найти?")
@@ -765,7 +795,7 @@ function storytale(){
             case 73:
                 p4.render()
                 print("Я увеличил урон твоих пуль, используй меня чаще")
-                gun.size+=1
+                gun.dmg+=1
                 phxON=true;
                 physics()
                 lock()
@@ -773,6 +803,7 @@ function storytale(){
                 draw(50,18,200,-0.4,0,120,120,"img/armbot1.png","physics","jump")
                 draw(70,16,200,-0.5,0,120,120,"img/armbot1.png","physics","jump")
                 draw(60,20,400,-1,0,80,80,"img/mistral.png","key","jump")
+                localStorage.setItem('save_gun', JSON.stringify(gun))
             break
             case 74:
                 p0.render()
@@ -835,8 +866,14 @@ function storytale(){
             break
             case 88:
                 print("Нам лучше поскорей направиться в белый дом")
+                localStorage.setItem('save_gun', JSON.stringify(gun))
             break
             case 89:
+                localStorage.setItem('save', Number(story))
+                canvas.style.width="800px"
+                canvas.style.height="500px"
+                canvas.width=800
+                canvas.height=500
                 p1.render()
                 print("Но перед этим - тренировка")
                 l6.render()
@@ -907,8 +944,20 @@ function storytale(){
                 p3.name="сексуальный мужик"
                 p3.render()
                 print("Кто же нас встретит в следующий раз...")
+                localStorage.setItem('save_gun', JSON.stringify(gun))
             break
             case 100:
+                localStorage.setItem('save', Number(story))
+                canvas.style.width="800px"
+                canvas.style.height="500px"
+                canvas.width=800
+                canvas.height=500
+                document.getElementById("text").style.background= 'white'
+                document.getElementById("texthead").style.background= 'white'
+                document.getElementById("text").style.color= 'black'
+                document.getElementById("texthead").style.color= 'black'
+                p3.name="сексуальный мужик"
+                p3.render()
                 l9.render()
                 print("Кстати...")
             break
@@ -1007,7 +1056,7 @@ function storytale(){
                 draw(40,10,400,-0.13,0,240,240,"img/sun.png","key","physics")
             break
             case 122:
-                print("Хахаха,все я устал")
+                print("Хахаха, все я устал")
                 phxON=true;
                 physics()
                 lock()
@@ -1066,7 +1115,7 @@ function storytale(){
             break
             case 134:
                 p3.render()
-                print("Окей, считать расстояние я не умею но что то мне подсказывает сенатор в том здании (указывает на самое большое здание в городе)")
+                print("Окей, считать расстояние я не умею, но что то мне подсказывает cенатор в том здании (указывает на самое большое здание в городе)")
             break
             case 135:
                 print("Так, мы близко, но тут охрана")
@@ -1086,8 +1135,18 @@ function storytale(){
             break
             case 137:
                 print("Да, это было быстро")
+                localStorage.setItem('save_gun', JSON.stringify(gun))
             break
             case 138:
+                localStorage.setItem('save', Number(story))
+                canvas.style.width="800px"
+                canvas.style.height="500px"
+                canvas.width=800
+                canvas.height=500
+                document.getElementById("text").style.background= 'white'
+                document.getElementById("texthead").style.background= 'white'
+                document.getElementById("text").style.color= 'black'
+                document.getElementById("texthead").style.color= 'black'
                 l8.render()
                 p2.render()
                 print("О, привет друзья, куда едем?")
@@ -1258,7 +1317,7 @@ document.addEventListener('keydown', function(event) {
                         DY= mouse.y-canvas.height/2;//снаряд летит с половины поля
                         HYP = Math.sqrt(DX*DX+DY*DY)
                         direction = Math.asin(DY/HYP)
-                    bullets[bullets.length]=new bullet(gun.x,canvas.height/2,Math.cos(direction)*gun.db,Math.sin(direction)*gun.db,gun.size*24,"img/a5.png")
+                    bullets[bullets.length]=new bullet(gun.x,canvas.height/2,Math.cos(direction)*gun.db,Math.sin(direction)*gun.db,gun.size*3+30,"img/a5.png")
                 }
             }
         }else{
