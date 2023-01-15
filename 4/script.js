@@ -23,7 +23,7 @@ canvas.onclick = function Fire(){
         HYP = Math.sqrt(DX*DX+DY*DY)
         direction = Math.asin(DY/HYP)
     bullets[bullets.length]=new bullet(gun.x,gun.y,Math.cos(direction)*gun.db,Math.sin(direction)*gun.db,gun.size,)
-    gun.power-=5;//обнуляем повер
+    gun.power-=3;//обнуляем повер
     if (gun.power<0){
         gun.power=0;
     }
@@ -190,11 +190,16 @@ function touch(obj1,obj2){
                 obj2.x+=2; 
             }
             if (obj2.type2=="moon"){
-                obj2.x-=2;
+                obj2.x-=3;
             }else if (obj2.type2=="sun"){
                 draw(60,10,5,-0.4,0,100,100,"img/df.png","physics","")
             }
-            fdmg(obj2,gun.dmg+obj1.size/2)
+            if (obj1.type=="dog"){
+                fdmg(obj2,gun.dmg*2+obj1.size)
+            }else{
+                fdmg(obj2,gun.dmg+obj1.size/2)
+            }
+            
             
         }
     }
@@ -230,7 +235,7 @@ function physics(){
     if(phxON){
         ctx.fillStyle="rgba(20,260,20,"+gun.compas+")"
             ctx.font="20px Impact"
-            ctx.fillText(Math.round(gun.power), 10, 20);
+            ctx.fillText("Энергия:"+Math.round(gun.power)+"\n Урон:"+Math.round(gun.dmg), 10, 20);
         if (gun.power<200){
             gun.power+=gun.Count
         }
@@ -925,7 +930,7 @@ function storytale(){
                 draw(25.15,3,5,-0.1,0,100,240,"img/bot.png","physics","")
                 draw(25.15,2,5,-0.1,0,100,100,"img/bot.png","physics","")
                 draw(25.15,1,5,-0.1,0,100,100,"img/bot.png","physics","")
-                draw(35,10,400,-0.1,0,240,240,"img/monsoon.png","key","moon")
+                draw(35,10,500,-0.1,0,240,240,"img/monsoon.png","key","moon")
             break
             case 95:
                 print("Да ты определённо знаешь что делаешь")
@@ -1077,7 +1082,17 @@ function storytale(){
                 print("А точно, ты же служишь армстронгу")
             break
             case 127:
+                localStorage.setItem('save', Number(story))
+                canvas.style.width="800px"
+                canvas.style.height="500px"
+                canvas.width=800
+                canvas.height=500
+                document.getElementById("text").style.background= 'white'
+                document.getElementById("texthead").style.background= 'white'
+                document.getElementById("text").style.color= 'black'
+                document.getElementById("texthead").style.color= 'black'
                 l7.render()
+                p3.render()
                 print("В таком случае нам нужно тебя убить")
             break
             case 128:
@@ -1317,7 +1332,7 @@ document.addEventListener('keydown', function(event) {
                         DY= mouse.y-canvas.height/2;//снаряд летит с половины поля
                         HYP = Math.sqrt(DX*DX+DY*DY)
                         direction = Math.asin(DY/HYP)
-                    bullets[bullets.length]=new bullet(gun.x,canvas.height/2,Math.cos(direction)*gun.db,Math.sin(direction)*gun.db,gun.size*3+30,"img/a5.png")
+                    bullets[bullets.length]=new bullet(gun.x,canvas.height/2,Math.cos(direction)*gun.db,Math.sin(direction)*gun.db,gun.size*10+32,"img/a5.png","dog")
                 }
             }
         }else{
@@ -1326,9 +1341,9 @@ document.addEventListener('keydown', function(event) {
     }
     if (event.code == 'KeyW') {
         if (gun.moon){
-            if (gun.power>3){
+            if (gun.power>5){
                 if (phxON){
-                    gun.power-=3
+                    gun.power-=5
                     let DX= mouse.x-gun.x;
                         DY= mouse.y-canvas.height/2;//снаряд летит с половины поля
                         HYP = Math.sqrt(DX*DX+DY*DY)
