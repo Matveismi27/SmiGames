@@ -682,7 +682,7 @@ function storytale(){
                 draw(90,4,30,-0.2,0,80,60,"img/solder.png","physics","choice")
                 draw(40,4,150,-0.1,0,120,100,"img/armbot2.png","physics","choice")
                 draw(100,8,30,-0.2,0,80,60,"img/solder.png","physics","choice")
-                draw(60,6,300,-0.4,0,180,200,"img/dog.png","key","jump")
+                draw(60,6,280,-0.4,0,180,200,"img/dog.png","key","jump")
                 print("Тебе не победить!")
             break
             case 48:
@@ -692,7 +692,7 @@ function storytale(){
                 phxON=true;
                 physics()
                 lock()
-                draw(40,7,360,-0.6,0,180,200,"img/dog.png","key","jump")
+                draw(40,7,330,-0.6,0,180,200,"img/dog.png","key","jump")
                 print("IM MY OWN MASTER NOW!")
             break
             case 50:
