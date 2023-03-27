@@ -127,14 +127,25 @@ function fdmg(object,dmg){
         }
     }
 }
+//* DELTA TIME --------------------
+deltaTime=0;
+function animate(now){
+    deltaTime = now - lastTime
+    lastTime = now
+    requestAnimationFrame(animate)
+}
+requestAnimationFrame(animate)
+//* --------------------------------
 function bgravity(bullet){
     if (!bullet.kill)
     {
-        bullet.x+=bullet.dx;
-        bullet.y+=bullet.dy;
+        //? физика
+        bullet.x+=bullet.dx * deltaTime/20
+        bullet.y+=bullet.dy * deltaTime/20
         bullet.dx*=0.999;
         bullet.dy+=0.01;
-        
+
+        //? Отрисовка
         ctx.beginPath();
 	    ctx.arc(bullet.x, bullet.y, bullet.size, 0, 2*Math.PI, false);
         ctx.fillStyle = bullet.color
@@ -160,8 +171,8 @@ function objgrav(object){
         }else if (object.type2=="physics"){
             object.dy+=0.01;
         }
-        object.x+=object.dx;
-        object.y+=object.dy;
+        object.x+=object.dx*deltaTime/20;
+        object.y+=object.dy*deltaTime/20;
         object.color = "rgba("+object.hp/10+","+object.hp+","+object.hp*10+","+0.002*object.hp+")"
         ctx.fillStyle = object.color
         ctx.fillRect(object.x,object.y,object.width,object.height);
@@ -187,12 +198,12 @@ function touch(obj1,obj2){
         {
             obj1.kill=true;
             if (obj1.type=="moon"){
-                obj2.x+=2; 
+                obj2.x+=-1 + obj1.size/3; 
             }
             if (obj2.type2=="moon"){
                 obj2.x-=3;
             }else if (obj2.type2=="sun"){
-                draw(60,10,5,-0.4,0,100,100,"img/df.png","physics","")
+                draw(70,10,5,-0.4,0,100,100,"img/df.png","physics","")
             }
             if (obj1.type=="dog"){
                 fdmg(obj2,gun.dmg*2+obj1.size)
@@ -268,6 +279,7 @@ function draw(x , y, hp, dx, dy, height,width,src,type,type2){
 //---------------------------------------------------------
 //
 //переменные --------------------------------------
+lastTime=0;
 way=0;
 i=0
 zipped=false;
@@ -692,7 +704,7 @@ function storytale(){
                 phxON=true;
                 physics()
                 lock()
-                draw(40,7,330,-0.6,0,180,200,"img/dog.png","key","jump")
+                draw(40,7,300,-0.6,0,180,200,"img/dog.png","key","jump")
                 print("IM MY OWN MASTER NOW!")
             break
             case 50:
@@ -1241,7 +1253,7 @@ function storytale(){
                 draw(40,15,10,0,0,100,100,"img/Swall.png","","choice")
                 draw(30,30,10,0,0,100,100,"img/Swall.png","","choice")
                 draw(40,30,10,0,0,100,100,"img/Swall.png","","choice")
-                draw(80,0,1000,-0.24,0,400,400,"img/Senator.png","key","SA")
+                draw(100,0,1000,-0.24,0,400,400,"img/Senator.png","key","SA")
                 print("МЕМЕS")
             break
             case 153:
