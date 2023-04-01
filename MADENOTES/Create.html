@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Note Creator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Press Arrow Keys to Create Notes</h1>
+    <button id="exportBtn">Export JSON</button>
+
+    <script>
+        const startTime = Date.now();
+        const notes = [];
+        const audioPlayer = new Audio("Dzhoker.mp3");
+        setTimeout(()=>{audioPlayer.play();},2000)
+
+        function onKeyDown(e) {
+            const currentTime = Date.now() - startTime;
+            let position;
+
+            switch (e.code) {
+                case "ArrowLeft":
+                    position = 0;
+                    break;
+                case "ArrowDown":
+                    position = 1;
+                    break;
+                case "ArrowRight":
+                    position = 2;
+                    break;
+                default:
+                    return; // Don't handle other keys
+            }
+
+            notes.push({ time: currentTime, position: position });
+        }
+
+        function exportJSON() {
+            const jsonStr = JSON.stringify(notes, null, 2);
+            const dataUri = "data:text/json;charset=utf-8," + encodeURIComponent(jsonStr);
+            const link = document.createElement("a");
+            link.setAttribute("href", dataUri);
+            link.setAttribute("download", "notes.json");
+            link.click();
+        }
+
+        document.addEventListener("keydown", onKeyDown);
+        document.getElementById("exportBtn").addEventListener("click", exportJSON);
+    </script>
+</body>
+</html>

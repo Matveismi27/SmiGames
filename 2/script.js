@@ -894,6 +894,8 @@ text.onclick = function(){
                         },
                         ()=>{
                             print("я Продолжу путь")
+                            way = 6
+                            story = 0
                             //todo Развилка на другую концовку
                         })
                     break
@@ -990,6 +992,59 @@ text.onclick = function(){
                         p1.change("meat.png")
                         p1.render()
                         print("Ты что здесь забыл?! Одолеть меня вздумал?")
+                    break
+                    case 6:
+                    break
+                    case 7:
+                    break
+                    case 8:
+                    break
+                    case 9:
+                    break
+                    case 10:
+                    break
+                    case 11:
+                    break
+                    case 12:
+                    break
+                    case 13:
+                    break
+                    case 14:
+                    break
+                    case 15:
+                    break
+
+            }
+            break
+            case 6://? Продолжил путь и не стал стражем
+                switch (story){
+                    case 0:
+                        p0.render()
+                        print("...")//не уверен показывает ли нулевой
+                    break
+                    case 1:
+                        print("Я не знаю что придумать")
+                    break
+                    case 2:
+                        p4.render()
+                        alert("Перед тобой появляется демон, ты слышишь как угабуга убегает")
+                        print("...")
+                    break
+                    case 3:
+                        p1.render()
+                        print("...")
+                    break
+                    case 4:
+                        p1.change("what.png")
+                        p1.render()
+                        print("...")
+                    break
+                    case 5:
+                        // hp=3
+                        // alert("внимание!!! Битва с боссом, пройти его можно только случайно так что не расстраивайся если не получится")
+                        p1.change("meat.png")
+                        p1.render()
+                        print("...")
                     break
                     case 6:
                     break
