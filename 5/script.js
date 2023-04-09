@@ -1,5 +1,8 @@
 const app = new PIXI.Application({ backgroundAlpha: 0 });
 document.body.appendChild(app.view);
+let leftClickArea = new PIXI.Graphics();
+let downClickArea = new PIXI.Graphics();
+let rightClickArea = new PIXI.Graphics();
 
 // Create play button that can be used to trigger the video
 const button = new PIXI.Graphics()
@@ -41,14 +44,26 @@ window.addEventListener("keydown", function(event) {
     // Проверяем, нажата ли клавиша со стрелкой влево
     if (event.keyCode === 37) {
       checkNoteCollision("left");
+      leftClickArea.changeColor("#1111f9")
+      this.setTimeout(()=>{
+        leftClickArea.changeColor("#118",0.5)
+        },50)
     }
     // Проверяем, нажата ли клавиша со стрелкой вниз
     else if (event.keyCode === 40) {
       checkNoteCollision("down");
+      downClickArea.changeColor("#11f911")
+      this.setTimeout(()=>{
+        downClickArea.changeColor("#181",0.5)
+        },50)
     }
     // Проверяем, нажата ли клавиша со стрелкой вправо
     else if (event.keyCode === 39) {
       checkNoteCollision("right");
+      rightClickArea.changeColor("#f91111")
+      this.setTimeout(()=>{
+      rightClickArea.changeColor("#811",0.5)
+      },50)
     }
   });
 
@@ -57,21 +72,26 @@ window.addEventListener("keydown", function(event) {
   function checkNoteCollision(key) {
     for (let i = 0; i < notesContainer.children.length; i++) {
       const note = notesContainer.children[i];
-      if (note.y > app.renderer.height - 150 && note.y < app.renderer.height + 50) {
+      if (note.y > app.renderer.height - 200 && note.y < app.renderer.height + 100) {
         if (key === "left" && note.x < app.renderer.width / 3) {
           notesContainer.removeChild(note);
           score += 10;
+          ////console.error("left");
         } else if (key === "down" && note.x >= app.renderer.width / 3 && note.x < (2 * app.renderer.width) / 3) {
           notesContainer.removeChild(note);
           score += 10;
+          ////console.error("down");
         } else if (key === "right" && note.x >= (2 * app.renderer.width) / 3) {
           notesContainer.removeChild(note);
           score += 10;
+          console.error("right");
         }else{
-          score -= 10;
+          score -= 5;
+          ////console.error("-5 от ноты");
         }
-        updateScoreUI();
+        
       }
+      updateScoreUI();
     }
   }
 //очевидно обновляем текст
@@ -183,20 +203,20 @@ function onPlayVideo() {
 
   //А теперь музон
   const audioPlayer = new Audio("Dzhoker.mp3");
-  setTimeout(()=>{audioPlayer.play();},4190)
+  setTimeout(()=>{audioPlayer.play();},2000)
 
   // Создаем прямоугольники для клика на ноту
-  let leftClickArea = new PIXI.Graphics();
+  
   leftClickArea.beginFill(0x0000ff, 0.2);
   leftClickArea.drawRect(0, app.renderer.height - 80, app.renderer.width / 3, 50);
   app.stage.addChild(leftClickArea);
-
-  let downClickArea = new PIXI.Graphics();
+  
+  
   downClickArea.beginFill(0x00ff00, 0.2);
   downClickArea.drawRect(app.renderer.width / 3, app.renderer.height - 80, app.renderer.width / 3, 50);
   app.stage.addChild(downClickArea);
 
-  let rightClickArea = new PIXI.Graphics();
+  
   rightClickArea.beginFill(0xff0000, 0.2);
   rightClickArea.drawRect((2 * app.renderer.width) / 3, app.renderer.height - 80, app.renderer.width / 3, 50);
   
@@ -216,3 +236,23 @@ function onPlayVideo() {
   // Добавляем функцию обновления в цикл игры
   app.ticker.add(updateNotes);
 }
+
+//? Методы для изменения цвета блоков -------------------
+leftClickArea.changeColor = function(color, alpha) {
+  this.clear(); // Очищаем графику
+  this.beginFill(color, alpha); // Устанавливаем новый цвет заполнения
+  this.drawRect(0, app.renderer.height - 80, app.renderer.width / 3, 50); // Рисуем блок заново
+};
+
+downClickArea.changeColor = function(color, alpha) {
+  this.clear();
+  this.beginFill(color, alpha);
+  this.drawRect(app.renderer.width / 3, app.renderer.height - 80, app.renderer.width / 3, 50);
+};
+
+rightClickArea.changeColor = function(color, alpha) {
+  this.clear();
+  this.beginFill(color, alpha);
+  this.drawRect((2 * app.renderer.width) / 3, app.renderer.height - 80, app.renderer.width / 3, 50);
+};
+//? -----------------------------------------------------
