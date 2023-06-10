@@ -37,4 +37,21 @@ body{
   #navbar ul li { float: none; }
   #navbar li:hover { background-color: #f90; }
   #navbar ul li:hover { background-color: #666; }
-  
+  .blog{
+    margin: 30px;
+    background-color: #666;
+  }
+  .zapis img{
+    margin-left: 5%;
+    width: 90%;
+    margin-top: 10px;
+  }
+  .zapis_content{
+    width: 80%;
+    margin: auto;
+  }
+  .zapis{
+    text-align: justify;
+    margin-top: 35px;
+    background-color: #afafaf;
+  }
