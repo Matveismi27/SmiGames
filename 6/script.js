@@ -1,3 +1,4 @@
+// TODO: классы, сюда их создаём
 class loc{
     constructor(config) {
         this.text=config.text||"";
@@ -33,6 +34,7 @@ class item{
     }
 }
 
+//todo Функции
 function modalload(){
     modal = document.querySelector(".modal");
     trigger = document.querySelector(".example");
@@ -80,6 +82,17 @@ function Mok(){
     modalAsk=false
     isModalstart=false
 }
+function ch1(){
+    document.getElementById("vibor").style.display="none"
+    way = 0
+    story=0
+}
+function ch2(){
+    alert("глава в разработке")
+}
+function ch3(){
+    alert("глава в разработке")
+}
 //функции
 function zip(){
     if(!zipped){
@@ -109,16 +122,39 @@ function print(txt){
     
 }
 // <audio src='files/song1.mp3' autoplay='autoplay'> - добавить музло!
-//создание объектов
+// todo ----- --создание объектов-- -----
 l1 = new loc ({
-    text:"Волшебный лес<audio src='files/song4.mp3' autoplay='autoplay'>",
-    name:"город",
-    fon:"files/wall1.jpg"
+    text:"Башня... но чья?<audio src='files/simple.mp3' autoplay='autoplay'>",
+    name:"Башня",
+    fon:"img/Towerv2.png"
+})
+
+l2 = new loc ({
+    text:"Тюрьма, вы в заключении!<audio src='files/simple.mp3' autoplay='autoplay'>",
+    name:"Чертова решётка",
+    fon:"img/dark.png"
+})
+
+l3 = new loc ({
+    text:"Безупречная королева сов!<audio src='files/simple.mp3' autoplay='autoplay'>",
+    name:"Королева Совик",
+    fon:"img/dark.png"
+})
+
+l4 = new loc ({
+    text:"Такая же темная как и всегда<audio src='files/Dark.mp3' volume='0.3' autoplay='autoplay'>",
+    name:"Тьма",
+    fon:"img/dark.png"
 })
 
 p0= new person({
     name:"Игрок",
-    img:"files/none.png"
+    img:"img/person.png"
+})
+
+p1= new person({
+    name:"Рассказчик",
+    img:"img/narrator.png"
 })
 
 //переменные
@@ -129,120 +165,71 @@ story=0;
 text=document.getElementById("text")
 //игра
 p1.render()
-l1.render()
-print("привет дружище!")
+
+print("Да начнётся же история...")
 
 text.onclick = function(){
     if (i==0){//это надо чтобы избежать бага с скипом
     
     //старт
     story+=1;
+    //какие есть пути? Тут все просто
     switch (way){
         case 0:
         
         switch (story){
+            //пустая глава
             case 1:
-                print("как дела?")
+                p1.render()
+                print("Ой, извини, что-то сломалось")
+                l4.render()
                 modalload()//на всякий чтобы записать переменные
                 break
             
             case 2:
-                print("хочешь узнать кто я да?")
+                print("Сообщи о баге разрабу")
                 break
             
             case 3:
-                print("Ха, ха, нет конечно, ты знаешь кто я!")
+                print("Я пожалуй ничего сам делать за него не буду вдруг все сломаю!")
                 break
             
-            case 4:
-                print("я, дьявол! И сегодня ты отправишься со мной")
-                p1.change("files/evil.png")
-                p1.render()
+            default:
+                print("Как починит -  возвращайся")
+                story=0
                 break
-            
-            case 5:
-                print("мне от тебя кое-что нужно")
-                break
-            
-            case 6:
-                print("и нет это даже не твоя душа!")
-                p1.change("files/dn.png")
-                p1.render()
-                break
-            
-            case 7:
-                print("Впрочем на месте все поймешь")
-                break
-            
-            case 8:
-                print("За мной!")
-                p1.change("files/dtalk.png")
-                p1.render()
-                break
-            
-            case 9:
-                zip()
-                print("Ничего не понял, но я согласен, выбора то у меня нет")
-                break
-
-            case 10:
-                print("Етить колотить где я?")
-                l2.render()
-                break
-            case 11:
-                print("Слева какой то лес, справа горы, по центру водопад, и че я здесь забыл???")
-                break
-            
-            case 12:
-                print("Хотя если забраться повыше... хм, вроде слева в дали какой-то дым от костра")
-                break
-            
-            case 13:
-                print("а там за водопадом очень красивые горы, куда же пойти?")
-                break
-
-            case 14:
-                print("я ведь ещё и голодный, что-же делать...")
-                break
-
-        default:
-            print("...")
-            ask("Налево к дыму? или вперёд в горы?","К дыму","В горы",
-            ()=>{
-                way=1;
-                story=0;
-            },
-            ()=>{
-                way=2;
-                story=0;
-            })
-            break
         }
         break//конец старта
-        case 1://путь в город
+        case 1://Глава 1
             
             switch (story){
                 case 1:
-                    print("так, в лес значит, ну тут вроде не то чтобы далеко, нормально, вперёд вперёд налево, надо запомнить...")
+                    print("Будем знакомы, я рассказчик!")
+                    l4.render()
+                    modalload()//на всякий чтобы записать переменные
                 break
                 case 2:
-                    print("Так я кажется забыл, вперёд вперёд направо? или налево? Так хавать хочется")
+                    print("Твой личный голос в голове на протяжении всех трёх глав. Кстати сразу предупреждаю прогресс не сохраняется!")
                 break
                 case 3:
-                    ask("налево пойдёшь?","Да, налево!","Лол нет",
+                    ask("Попытаться открыть глаза?","Да, давай","Лол нет",
                     ()=>{
-                        document.body.innerHTML="<div class='fon'>Поражение, тебя сожрали волки<div>"
-                        document.body.style.fontSize='40px';
-                        
+                        print("Глаза слиплись но с трудом ты их открываешь")
                     },
                     ()=>{
-                    })
+                        ask("Ты закрыл глаза и ты вспоминаешь...","где я?","кто я?",
+                        ()=>{
+                            print("Ты - заключенный заточённый под стражу в каком то замке, ты ничерта не помнишь")
+                        },
+                        ()=>{
+                            print("Некогда ты был великим воином но ни ты ни остальные не помнят об этих временах")
+                        })
 
-                    print("Так, я уже вижу, в далеке город, на вид современный")
+                    })
                 break
                 case 4:
-                    l3.render()
-                    print("Хм, он вроде и современный, но как будто заброшен, однако я точно видел людей")
+                    l1.render()
+                    print("Ты все таки открываешь глаза")
                 break
                 case 5:
                     print("ещё какая-то музыка, у них тут праздник?")
