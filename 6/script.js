@@ -4,7 +4,9 @@
     
 //     audio.volume = 0.3;
 //   }, false);
-
+function fullScreen(){
+    document.body.requestFullscreen()
+}
 // TODO: классы, сюда их создаём
 class loc{
     constructor(config) {
@@ -16,7 +18,7 @@ class loc{
     render() {
         document.getElementById("menu").innerHTML=this.text;
         document.getElementById("LocName").innerHTML=this.name;
-        document.body.style.backgroundImage='url("'+this.fon+'")'
+        document.getElementById("Game").style.backgroundImage='url("'+this.fon+'")'
         let audio = document.querySelector('audio');
     
         audio.volume = 0.2;
@@ -124,15 +126,15 @@ document.getElementById("fullButton").addEventListener("click",()=>{
     full+=1;
     if (full==1){
         // deffaultBGSize = document.body.style.backgroundSize;
-        document.body.style.backgroundSize="100%";
+        document.getElementById("Game").style.backgroundSize="100%";
         
     }else if(full==2){
-        document.body.style.backgroundSize="70%";
+        document.getElementById("Game").style.backgroundSize="70%";
 
     }else if(full==3){
-        document.body.style.backgroundSize="900px";
+        document.getElementById("Game").style.backgroundSize="900px";
     }else{
-        document.body.style.backgroundSize="720px";
+        document.getElementById("Game").style.backgroundSize="720px";
         full = 0;
     }
     
@@ -319,14 +321,12 @@ text.onclick = function(){
                     p0.render()
                 break
                 case 9:
-                    print("Тебя довольно бодро приволокли в темницу, на поясе этого стражника почему то был кухонный нож, тебя закидывают в камеру и вот ты и тут... камера выглядит ну прямо сказать так себе, в башне всего две камеры и по сравнению с второй - эта ещё нормальная")
+                    print("Тебя довольно бодро приволокли в темницу, на поясе этого стражника почему то был кухонный нож, тебя закидывают в камеру и вот ты и тут... ")
                     p1.render()
                     l2.render()
                 break
                 case 10:
-                    
-                    p2.render()
-                    print("Устраивайся поудобнее, щас принесу еды! Она очень вкусная!")
+                    print("камера выглядит ну прямо сказать так себе, в башне всего две камеры и по сравнению с второй - эта ещё нормальная!")
                 break
                 case 11:
                     print("а вот и еда. Я уверен ты голодный, по тебе видно. Обязательно съешь всё!")

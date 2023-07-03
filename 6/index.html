@@ -25,7 +25,7 @@
         @media (max-width:812px) {
             body{
                 background-size: 100%;
-                font-size: 90%;
+                font-size: 80%;
             }
         }
         @media (max-height:550px) {
@@ -113,7 +113,7 @@
                 width: 90%;
             }
             #texthead{
-                width: 24%;
+                width: 50%;
             }
         }
         @media (max-height:450px) {
@@ -206,6 +206,7 @@
         .chimg{
             width: 300px;
         }
+        
         .chbox{
             margin-top: 20px;
             width: 410px;
@@ -213,12 +214,27 @@
             margin-left: 10px;
             border-radius: 30px;
         }
+        @media (max-width:400px) {
+            .chimg{
+                width: 200px;
+            }
+            .chapter{
+                width: 200px;
+                font-family: "Anime Ace v3";
+            }
+            .chbox{
+            margin-top: 10px;
+            width: 300px;
+            height: 200px;
+            margin-left: 10px;
+        }
+        }
         #vibor{
             display: flex;
             place-items: center;
             position: absolute;
             background-color: #1f1f27;
-            margin-top: -145px;
+            margin-top: 0px;
             padding: 5%;
             width: 90%;
             height: 90%;
@@ -248,6 +264,17 @@
         #LocName{
             padding: 5px;
         }
+        #Game{
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            transition: 50ms;
+            background-size: 812px;
+            background-position-y: top;
+            background-position-x:center;
+            background-color: rgb(18, 18, 18);
+            background-repeat: no-repeat;
+        }
       </style>
 </head>
 <body>
@@ -255,7 +282,7 @@
         
 
         <!-- ? интерфейс -->
-    
+    <div id="Game">
     <h1 id="LocName"></h1>
     <h2 id="time"></h2>
     <div class="font">info:</div>
@@ -265,9 +292,11 @@
     <div id="texthead" class="font"></div>
     <div id='gif'></div>
     <button id="fullButton">Размер фона</button>
+    <button onclick="fullScreen()">Полный экран</button>
     <script src="script.js"></script>
+    </div>
     <div>
-        
+    
         
         
         
@@ -296,17 +325,18 @@
         ?-----------------------
         -->
         <div id="vibor">
+            <button onclick="fullScreen()">Полный экран</button>
             <div class="chbox">
                 <button class="chapter" onclick="ch1()">Глава 1 - Сон смешной птицы</button>
-                <img class="chimg" src="img/ch1.png" alt="">
+                <img class="chimg" src="img/ch1.png" onclick="ch1()" alt="">
             </div >
             <div class="chbox">
                 <button class="chapter" onclick="ch2()">Глава 2 - Народы моря</button>
-                <img class="chimg" src="img/lock.png" alt="">
+                <img class="chimg" src="img/lock.png" onclick="ch2()" alt="">
             </div>
             <div class="chbox">
                 <button class="chapter" onclick="ch3()">Глава 3 - Ад наяву</button>
-                <img class="chimg" src="img/lock.png" alt="">
+                <img class="chimg" src="img/lock.png" onclick="ch3()" alt="">
             </div>
         </div>
 </body>
