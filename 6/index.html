@@ -128,7 +128,7 @@
             background-color: rgba(1, 1, 1, 0.8);
         }
                 /* кнопка */
-        button {
+        button{
         position: relative;
         overflow: hidden;
         border: 1px solid #ffffff;
@@ -148,7 +148,18 @@
         button:hover {
         transition: 200ms;
         transform-origin: bottom center;
-        transform: scaleY(1.2);
+        transform: scaleY(1.1);
+        background: #0a2f31;
+        color: #ececff;
+        border: 1px solid #0a2f31;
+        }
+        button:active {
+            transition: 200ms;
+            transform-origin: bottom center;
+            transform: scaleY(0.9);
+            background: #ffffff;
+            color: #00002c;
+            border: 1px solid #ffffff;
         }
     </style>
     <style>
@@ -217,14 +228,18 @@
         @media (max-width:400px) {
             .chimg{
                 width: 200px;
+                margin-left: 10px;
             }
             .chapter{
                 width: 200px;
                 font-family: "Anime Ace v3";
+                margin-left: 10px;
+
             }
             .chbox{
+            text-align: center;
             margin-top: 10px;
-            width: 300px;
+            width: 200px;
             height: 200px;
             margin-left: 10px;
         }
@@ -238,7 +253,6 @@
             padding: 5%;
             width: 90%;
             height: 90%;
-            
 
         }
         
@@ -256,10 +270,13 @@
             html{
                 overflow:auto;
             }
+            
+
+        }
+        @media (max-width:500px) {
             #fullButton{
                 display: none;
             }
-
         }
         #LocName{
             padding: 5px;
