@@ -280,6 +280,7 @@
         }
         #LocName{
             padding: 5px;
+            width: 40%;
         }
         #Game{
             position: absolute;
@@ -292,6 +293,17 @@
             background-color: rgb(18, 18, 18);
             background-repeat: no-repeat;
         }
+        #flash{
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            transition: 50ms;
+            background-size: 812px;
+            background-position-y: top;
+            background-position-x:center;
+            background-color: rgb(0, 0, 0,1);
+            background-repeat: no-repeat;
+        }
       </style>
 </head>
 <body>
@@ -300,6 +312,7 @@
 
         <!-- ? интерфейс -->
     <div id="Game">
+    <div id="flash"></div>
     <h1 id="LocName"></h1>
     <h2 id="time"></h2>
     <div class="font">info:</div>
@@ -342,7 +355,6 @@
         ?-----------------------
         -->
         <div id="vibor">
-            <button onclick="fullScreen()">Полный экран</button>
             <div class="chbox">
                 <button class="chapter" onclick="ch1()">Глава 1 - Сон смешной птицы</button>
                 <img class="chimg" src="img/ch1.png" onclick="ch1()" alt="">
