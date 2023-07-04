@@ -847,7 +847,7 @@ text.onclick = function(){
             print("Лошади остановились, сразу видно - все устали после дня пути")
         })
         add(()=>{
-            l8.change('img/forest.png')
+            l8.change('img/forest2.png')
             print("Остальные развели костёр а ты решил провести небольшую разведку на предмет опасности рядом")
         })
         add(()=>{
@@ -950,7 +950,7 @@ text.onclick = function(){
         })
         add(()=>{
             print("Пора сваливать")
-            l9.change("img/forest.png")
+            l9.change("img/forest2.png")
         })
         add(()=>{
             print("Ты бегом, с колотящимся сердцем добегаешь до костра")
