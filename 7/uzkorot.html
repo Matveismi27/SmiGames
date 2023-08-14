@@ -1,0 +1,331 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #frogs{
+            padding: 5px;
+            background-color: rgb(218, 218, 218);
+            text-align: center;
+            display: grid;
+            grid-gap: 5px;
+            grid-template-columns: repeat(auto-fit, 150px);
+        }
+        #frogsMerge{
+            margin:10px;
+            width: 300px;
+            height: 300px;
+            padding: 5px;
+            background-color: rgb(255, 215, 255);
+            text-align: center;
+            display: grid;
+            grid-gap: 5px;
+            grid-template-columns: repeat(auto-fit, 150px);
+        }
+        #RunPanel{
+            width: 250px;
+            height: 150px;
+            background-color: rgb(196, 228, 159);
+            transition: 1s;
+        }
+        #SellPanel{
+            width: 250px;
+            height: 150px;
+            background-color: rgb(255, 93, 93);
+        }
+        #upgrades{
+            position: absolute;
+            right: 100px;
+            top: 100px;
+            width: 350px;
+            padding: 10px;
+            height: 400px;
+            background-color: rgb(255, 231, 165);
+        }
+        #upgrades button{
+            position: absolute;
+            right: 20px;
+            width: 100px;
+            padding: 1px;
+            height: 35px;
+            color: rgb(255, 255, 255);
+            font-family:'Gill Sans';
+            font: 12px bold;
+            background-color: rgb(83, 77, 68);
+            transition: 150ms;
+        }
+        #upgrades button:hover{
+            color: rgb(39, 163, 37);
+        }
+        #share{
+            position: absolute;
+            text-align: center;
+            right: 100px;
+            background-color: greenyellow;
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <div id="MLabel">Количество монет = 0</div>
+
+    <button id="MButton" onclick="AddCoin()">+ монетка</button>
+    <button id="FButton" onclick="AddFrog()">Купить лягушку за 10 монет</button>
+    <div id="frogs"></div>
+    <div id="frogsMerge"></div>
+    <button onclick="merge()">Скрестить</button>
+    <div id="RunPanel">Отправить в бега</div>
+    <div id="SellPanel">Продать</div>
+    <div id="upgrades">
+        Апгрейды:
+        <p>+монетка<button onclick="plusCoin()" id="plusCoin">15</button></p>
+        <p>Больше скорость<button onclick="plusSpeed()" id="plusSpeed">100</button></p>
+    </div>
+    <div id="share">Поделиться лягушкой
+        <canvas height="612" width="612" id="shareCanvas"></canvas>
+    </div>
+</div>
+</body>
+<script>
+    // * Класс ---
+    class frog{
+        id = 0
+        name="deffaultFrog";
+        color=[1,1,1]
+        size=1 //сантиметр (монитор примерно 25 в высоту)
+        speed=1
+        location=0
+    }
+
+    //todo Переменные ---
+    let coin = 0
+    cost_frog=10
+    CoinAdder=1
+    SpeedUpgrade=0
+    cost_plusCoin=15
+    cost_plusSpeed=100
+    const ML = document.getElementById("MLabel")
+    const MB = document.getElementById("MButton")
+    const FB = document.getElementById("FButton")
+    const FrogsDiv = document.getElementById("frogs")
+    const FrogsMerge= document.getElementById("frogsMerge")
+    const RunPanel = document.getElementById("RunPanel")
+    const SellPanel = document.getElementById("SellPanel")
+    const myFrogs = []
+    let skamiaLagushek = []
+    let skamiaMerga = []
+    let runned =false
+    //todo Функции ---
+    function AddCoin(){
+        coin+=CoinAdder
+        ML.innerHTML = "Количество монет = "+coin
+        MB.disabled=true
+        setTimeout(() => {
+            MB.disabled=false
+        }, 300);
+    }
+    function plusCoin(event){
+        if (coin>=cost_plusCoin){
+            coin-=cost_plusCoin
+            CoinAdder*=2
+            cost_plusCoin*=3
+            MB.innerHTML = "+ "+CoinAdder+"м."
+            document.getElementById("plusCoin").innerHTML=cost_plusCoin
+        }else{
+
+            document.getElementById("plusCoin").style.backgroundColor = "rgb(200,60,60)"
+            setTimeout(() => {
+                document.getElementById("plusCoin").style.backgroundColor = "rgb(83, 77, 68)"
+            }, 400);
+        }
+        monitor()
+    }
+    function plusSpeed(){
+        if (coin>=cost_plusSpeed){
+            coin-=cost_plusSpeed
+            SpeedUpgrade+=1
+            cost_plusSpeed*=2
+            document.getElementById("plusSpeed").innerHTML=cost_plusSpeed
+        }else{
+
+            document.getElementById("plusSpeed").style.backgroundColor = "rgb(200,60,60)"
+            setTimeout(() => {
+                document.getElementById("plusSpeed").style.backgroundColor = "rgb(83, 77, 68)"
+            }, 400);
+        }
+        monitor()
+    }
+    function rn(length){
+        return Math.floor(Math.random() * length)
+    }
+    function randomFrog(){
+        newFrog = new frog()
+        newFrog.id=myFrogs.length
+        //Генерируем имя лягушки
+        symbolsh = "ЙЦУКЕНГШЩЗХФВАПРОЛДЖЭЯЧСМИТБЮ"
+        symbolsl = "йцукенгшщзхъфывапролджэячсмитьбю"
+        length = rn(3)+3
+        name = symbolsh[rn(29)]
+        for (i = 0; i<length;i++){
+            name += symbolsl[rn(32)]
+        }
+        // alert("у вас новая лягушка "+name)
+        newFrog.name = name
+        newFrog.color = [rn(255),rn(255),rn(255)]
+        newFrog.size = rn(2)+1
+        newFrog.speed = rn(2+SpeedUpgrade)+1
+        return newFrog
+    }
+    function AddFrog(){
+        if (coin>=cost_frog){
+            coin-=cost_frog
+            cost_frog+=2
+            FB.innerHTML = `Купить лягушку за ${cost_frog} монет`
+            myFrogs.push(randomFrog())
+            FB.disabled=true
+            setTimeout(() => {
+                FB.disabled=false
+            }, 300);
+            monitor()
+        }else{
+            alert("нужно больше монет")
+        }
+        
+    }
+    function monitor(){
+        ML.innerHTML = "Количество монет = "+coin
+        FrogsDiv.innerHTML=""
+        skamiaLagushek = []
+        FrogsMerge.innerHTML=""
+        skamiaMerga = []
+        i=0
+        myFrogs.forEach(element => {
+            element.id = i
+            i++
+            style = `height: ${element.size};`
+            style+= `background-color: rgb(${element.color[0]}, ${element.color[1]}, ${element.color[2]});` 
+            midleCollor = element.color[0]+element.color[1]+element.color[2]
+            midleCollor/=3
+            midleCollor = Math.round(midleCollor/255)
+            // alert(midleCollor)
+            midleCollor = (1 - midleCollor)*255
+            style+= `color: rgb(${midleCollor}, ${midleCollor}, ${midleCollor});`
+
+            style+= `width: ${element.size*5+100}px;`;
+            block = `<div class="frog" draggable="true" ondragstart = "dragFrog(${element.id})" style="${style}">Имя: ${element.name}<br> Размер: ${element.size} <br> Скорость: ${element.speed}`
+            if (element.location == 0){
+                FrogsDiv.innerHTML+= block
+                skamiaLagushek.push(element)
+            }
+            if (element.location == 1){
+                FrogsMerge.innerHTML+= block
+                skamiaMerga.push(element)
+            }
+        });
+    }
+    dragedFrog=new frog()
+    function dragFrog(idfrog){
+        dragedFrog = myFrogs[idfrog]
+    }
+    FrogsDiv.ondragover=(event)=>{
+        event.preventDefault();
+    }
+    FrogsMerge.ondragover=(event)=>{
+        event.preventDefault();
+    }
+    SellPanel.ondragover=(event)=>{
+        event.preventDefault();
+    }
+    RunPanel.ondragover=(event)=>{
+        event.preventDefault();
+    }
+    FrogsMerge.ondrop = ()=>{
+        dragedFrog.location=1
+        monitor()
+    }
+    frogs.ondrop = ()=>{
+        dragedFrog.location=0
+        monitor()
+    }
+    SellPanel.ondrop =()=>{
+        plus = (dragedFrog.size*dragedFrog.speed)*dragedFrog.size*5
+        if (confirm("вы хотите продать "+dragedFrog.name+" за "+plus+"?")){
+            coin+=plus
+            myFrogs.splice(dragedFrog.id,1)
+        }
+        monitor()
+    }
+    RunPanel.ondrop=()=>{
+        
+        if (runned!=true){
+            runFrog = dragedFrog
+            runned = true
+            RunPanel.style.backgroundColor = "rgb(10,30,10)"
+            myFrogs.splice(dragedFrog.id,1)
+            monitor()
+            setTimeout(() => {
+                coin += runFrog.speed
+                ML.innerHTML = "Количество монет = "+coin
+                setTimeout(() => {
+                    coin += runFrog.speed
+                    ML.innerHTML = "Количество монет = "+coin
+                        setTimeout(() => {
+                        coin += runFrog.speed*2
+                        ML.innerHTML = "Количество монет = "+coin
+                            setTimeout(() => {
+                            coin += runFrog.speed*runFrog.speed
+                            ML.innerHTML = "Количество монет = "+coin
+                            myFrogs.push(runFrog)
+                            runned = false
+                            RunPanel.style.backgroundColor = "rgb(196, 228, 159)"
+                            monitor()
+                        }, 100*runFrog.size);
+                    }, 100*runFrog.size);
+                }, 100*runFrog.size);
+            }, 80*runFrog.size);
+        }
+    }
+    document.getElementById("share").ondrop=()=>{
+        dragedFrog
+        const canvas= document.getElementById("shareCanvas")
+        const ctx = canvas.getContext('2d')
+        img = new Image();
+
+        img.src = "frog.jpg";
+        img.onload =()=>{
+            ctx.drawImage(img,0,0,612,612)
+        }
+        
+    }
+    function merge(){
+        if (skamiaMerga.length!=2){
+            alert("Скрещивать можно только двух лягушек")
+            return
+        }
+        
+        // Скрещивание двух жаб
+        MergedFrog = new frog()
+        MergedFrog.id=myFrogs.length
+        symbolsl = "йцукенгшщзхъфывапролджэячсмитьбю"
+        MergedFrog.name = skamiaMerga[0].name[0]+skamiaMerga[0].name[1]+skamiaMerga[0].name[2]
+        plus_symbols=rn(4)
+        for (i = 0; i<plus_symbols;i++){
+            MergedFrog.name += symbolsl[rn(32)]
+        }
+        MergedFrog.color = 
+        [(skamiaMerga[0].color[0]+skamiaMerga[1].color[0])/2,
+         (skamiaMerga[0].color[1]+skamiaMerga[1].color[1])/2,
+         (skamiaMerga[0].color[2]+skamiaMerga[1].color[2])/2]
+        MergedFrog.size =  Math.floor((skamiaMerga[0].size+rn(4)-2+skamiaMerga[1].size)/2)+1
+        MergedFrog.speed = Math.floor((skamiaMerga[0].speed+rn(8)-1+skamiaMerga[1].speed)/2)
+        MergedFrog.location=1
+        myFrogs.splice(skamiaMerga[0].id,1,MergedFrog)
+        myFrogs.splice(skamiaMerga[1].id,1)
+        monitor()
+    }
+</script>
+</html>
