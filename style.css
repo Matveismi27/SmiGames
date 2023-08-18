@@ -39,6 +39,8 @@ body{
   #navbar ul li:hover { background-color: #666; }
   .blog{
     margin: 30px;
+    padding: 10px;
+    max-width: 600px;
     background-color: #666;
   }
   .zapis img{
